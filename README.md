@@ -1,3 +1,3 @@
 # PosTech-3SOAT
 
-Backend: NodeJs + Express + TypeORM + PostgreSQL 
+**Backend**: NodeJs + Express + TypeORM + PostgreSQL 
