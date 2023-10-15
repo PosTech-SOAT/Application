@@ -1,21 +1,29 @@
 {
+  "type": "commonjs",
   "name": "PosTech-3SOAT",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --inspect --transpile-only --ignore-watch node_modules src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLFactory.ts migration:generate ./src/infra/typeorm/migrations",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLFactory.ts migration:run"
   },
   "repository": "git@github.com:VitorDiToro/PosTech-3SOAT.git",
   "author": "Dedyanna Cacau <dedyannacacau@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "pg": "^8.11.3",
-    "typeorm": "^0.3.17"
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/node": "^20.8.6",
+    "@types/uuid": "^9.0.5",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
