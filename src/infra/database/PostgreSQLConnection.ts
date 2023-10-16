@@ -5,14 +5,16 @@ class PostgreSQLConnection {
   private connection: DataSource | undefined;
 
   async getConnection(): Promise<DataSource | undefined> {
-    if (this.connection) {
+    if (this.connection?.isInitialized) {
       return this.connection;
     }
 
-    this.connection = PostgreSQLFactory;
+    const factory = new PostgreSQLFactory();
+
+    this.connection = await factory.create();
 
     return this.connection;
   }
 }
 
-export default new PostgreSQLConnection();
+export const DbConnection: PostgreSQLConnection = new PostgreSQLConnection();

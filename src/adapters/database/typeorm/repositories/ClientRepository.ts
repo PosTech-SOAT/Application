@@ -1,9 +1,9 @@
-import { Repository } from "typeorm";
+import { DataSource, EntityRepository, Repository } from "typeorm";
 import { ICreateClientPort } from "../../../../application/ports/ICreateClientPort";
 import { IClient } from "../../../../domain/entities/ClientEntity";
 import { CreateClientParamsDto } from "../../../../dto/CreateClientParamsDto";
-import DbConnection from "../../../../infra/database/PostgreSQLConnection";
 import { Client } from "../entities/Client";
+import { DbConnection } from "../../../../infra/database/PostgreSQLConnection";
 
 export class ClientRepository implements ICreateClientPort{
   private connection: typeof DbConnection;
@@ -12,18 +12,26 @@ export class ClientRepository implements ICreateClientPort{
     this.connection = DbConnection;
   }
 
-  private async getRepository(): Promise<Repository<Client>> {
-    const con: any = await this.connection.getConnection();
+  private async getRepo(): Promise<Repository<Client>> {
+    if (!this.connection) {
+      throw new Error("A conexão não foi estabelecida.");
+    }
+    
+    const con = await this.connection.getConnection();
+    
+    if (!con) {
+      throw new Error("A conexão não foi obtida com sucesso.");
+    }
 
     return con.getRepository(Client);
   }
 
-  async createClient(client: CreateClientParamsDto): Promise<IClient> {
-    const repo = await this.getRepository();
+  async createClient(params: CreateClientParamsDto): Promise<IClient> {
+    const repo = await this.getRepo();
 
-    const newClient = repo.create(client);
+    const client = repo.create(params);
 
-    return await repo.save(newClient);
+    return await repo.save(client);
   }
     
 }
