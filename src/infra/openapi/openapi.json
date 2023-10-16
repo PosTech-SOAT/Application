@@ -1,0 +1,53 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PosTech-3SOAT",
+    "version": "1.0.0",
+    "description": "Tech Challenge."
+  },
+  "paths": {
+    "/clients/createClient": {
+      "post": {
+        "summary": "Create a new client",
+        "requestBody": {
+          "description": "New client details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Client created successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "cpf": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

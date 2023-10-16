@@ -121,7 +121,7 @@
     "@types/range-parser" "*"
     "@types/send" "*"
 
-"@types/express@^4.17.17":
+"@types/express@*", "@types/express@^4.17.17":
   version "4.17.19"
   resolved "https://registry.npmjs.org/@types/express/-/express-4.17.19.tgz"
   integrity sha512-UtOfBtzN9OvpZPPbnnYunfjM7XCI4jyk1NvnFhTVz5krYAnW4o5DCoIekvms+8ApqhB4+9wSge1kBijdfTSmfg==
@@ -199,6 +199,14 @@
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@types/swagger-jsdoc/-/swagger-jsdoc-6.0.1.tgz#94a99aca0356cb64ad2a6eb903ed034703453801"
   integrity sha512-+MUpcbyxD528dECUBCEVm6abNuORdbuGjbrUdHDeAQ+rkPuo2a+L4N02WJHF3bonSSE6SJ3dUJwF2V6+cHnf0w==
+
+"@types/swagger-ui-express@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@types/swagger-ui-express/-/swagger-ui-express-4.1.4.tgz#4cf91ed46a4d17797a38cbf9805ad6fa4730dad6"
+  integrity sha512-h6dfIPFveCJKpStDtjrB+4pig4DAf9Uu2Z51RB7Fj3s6AifexmqhZxBoG50K/k3Afz7wyXsIAY5ZIDTlC2VjrQ==
+  dependencies:
+    "@types/express" "*"
+    "@types/serve-static" "*"
 
 "@types/uuid@^9.0.5":
   version "9.0.5"

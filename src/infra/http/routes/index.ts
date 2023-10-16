@@ -4,6 +4,6 @@ import { clientRoutes } from "./ClientRoutes";
 
 const router = Router();
 
-router.use("/createClient", clientRoutes);
+router.use("/clients/createClient", clientRoutes);
 
 export { router };
