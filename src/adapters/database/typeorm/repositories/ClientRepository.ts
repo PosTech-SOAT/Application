@@ -1,11 +1,11 @@
 import { DataSource, EntityRepository, Repository } from "typeorm";
-import { ICreateClientPort } from "../../../../application/ports/ICreateClientPort";
 import { IClient } from "../../../../domain/entities/ClientEntity";
 import { CreateClientParamsDto } from "../../../../dto/CreateClientParamsDto";
 import { Client } from "../entities/Client";
 import { DbConnection } from "../../../../infra/database/PostgreSQLConnection";
+import { IClientRepositoryPort } from "../../../../application/ports/IClientRepositoryPort";
 
-export class ClientRepository implements ICreateClientPort{
+export class ClientRepository implements IClientRepositoryPort{
   private connection: typeof DbConnection;
 
   constructor() {
@@ -32,6 +32,30 @@ export class ClientRepository implements ICreateClientPort{
     const client = repo.create(params);
 
     return await repo.save(client);
+  }
+
+  async findByCPF(cpf: string): Promise<IClient | null> {
+    const repo = await this.getRepo();
+
+    const client = await repo.findOne({ where: { cpf } });
+
+    return client || null;
+  }
+
+  async findById(id: string): Promise<IClient | null> {
+    const repo = await this.getRepo();
+
+    const client = await repo.findOne({ where: { id } });
+
+    return client || null;
+  }
+
+  async list(): Promise<IClient[]> {
+    const repo = await this.getRepo();
+
+    const clients = await repo.find();
+
+    return clients;
   }
     
 }

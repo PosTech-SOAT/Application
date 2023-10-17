@@ -3,8 +3,9 @@ import ClientController from "../../../adapters/controllers/ClientController";
 
 const clientRoutes = Router();
 
-const createClientController = new ClientController();
+const clientController = new ClientController();
 
-clientRoutes.post('/', createClientController.create);
+clientRoutes.post('/', clientController.create);
+clientRoutes.get('/', clientController.list);
 
 export { clientRoutes };

@@ -6,6 +6,9 @@ export type CreateClientParams = {
   cpf: string;
 }
 
-export interface ICreateClientPort {
+export interface IClientRepositoryPort {
   createClient(params: CreateClientParams): Promise<IClient>;
+  findByCPF(cpf: string): Promise<IClient | null>;
+  findById(id: string): Promise<IClient | null>;
+  list(): Promise<IClient[]>;
 }
