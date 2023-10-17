@@ -6,8 +6,9 @@ import { Client } from "../../adapters/database/typeorm/entities/Client";
 const port = process.env.DB_PORT as number  | undefined;
 
 export class PostgreSQLFactory {
-    async create(): Promise<DataSource> {
-        const dataSource = new DataSource({
+    private data: DataSource
+    constructor() {
+        this.data =  new DataSource({
             type: "postgres",
             host: process.env.DB_HOST,
             port: port,
@@ -16,10 +17,17 @@ export class PostgreSQLFactory {
             database: process.env.DB_NAME,
             entities: [Client],
             migrations: ["./src/infra/typeorm/migrations/*.ts"],
-            synchronize: true
+            synchronize: true,
+            logging: true,
         });
-        await dataSource.initialize();
-        return dataSource;
+    }
+    get dataSource(){
+        return this.data
+    }
+    async create(): Promise<DataSource> {
+        
+        await this.data.initialize();
+        return this.data;
     }
 }
 

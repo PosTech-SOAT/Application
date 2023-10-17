@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --inspect --transpile-only --ignore-watch node_modules src/index.ts",
     "build": "tsc",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/PostgreSQLFactory.ts migration:generate ./src/infra/typeorm/migrations",
-    "migration:run": "typeorm-ts-node-commonjs -d ./src/PostgreSQLFactory.ts migration:run",
-    "migration:revert": "typeorm-ts-node-commonjs -d ./src/PostgreSQLFactory.ts migration:revert"
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:generate ./src/infra/typeorm/migrations",
+    "migration:run": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:run",
+    "migration:revert": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:revert"
   },
   "repository": "git@github.com:VitorDiToro/PosTech-3SOAT.git",
   "author": "Dedyanna Cacau <dedyannacacau@gmail.com>",
