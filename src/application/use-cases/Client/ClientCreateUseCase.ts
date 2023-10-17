@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IClient } from "../../domain/entities/ClientEntity";
-import { CreateClientParams, IClientRepositoryPort } from "../ports/IClientRepositoryPort";
+import { IClient } from "../../../domain/entities/ClientEntity";
+import { CreateClientParams, IClientRepositoryPort } from "../../ports/IClientRepositoryPort";
 
 @injectable()
 export default class ClientCreateUseCase {

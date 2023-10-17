@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import ClientCreateUseCase from "../../application/use-cases/ClientCreateUseCase";
-import ClientListUseCase from "../../application/use-cases/ClientListUseCase";
+import ClientCreateUseCase from "../../application/use-cases/Client/ClientCreateUseCase";
+import ClientListUseCase from "../../application/use-cases/Client/ClientListUseCase";
+import ClientFindOneUseCase from "../../application/use-cases/Client/ClientFindOneUseCase";
 
 export default class ClientController {
 
@@ -30,6 +31,18 @@ export default class ClientController {
       const clients = await clientListUseCase.execute();
 
       return response.status(200).json(clients);
+    } catch (error: any) {
+      return response.status(400).json({ message: error.message });
+    }
+  }
+
+  async findById(request: Request, response: Response) {
+    const clientListUseCase = container.resolve(ClientFindOneUseCase);
+
+    try {
+      const client = await clientListUseCase.execute(request.params.id);
+
+      return response.status(200).json(client);
     } catch (error: any) {
       return response.status(400).json({ message: error.message });
     }
