@@ -2,6 +2,7 @@ import "dotenv/config"
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { Client } from "../../adapters/database/typeorm/entities/Client";
+import { Category } from "../../adapters/database/typeorm/entities/Category";
 
 const port = process.env.DB_PORT as number  | undefined;
 
@@ -15,10 +16,10 @@ export class PostgreSQLFactory {
             username: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_NAME,
-            entities: [Client],
+            entities: [Client, Category],
             migrations: ["./src/infra/typeorm/migrations/*.ts"],
             synchronize: true,
-            logging: true,
+            logging: false,
         });
     }
     get dataSource(){
