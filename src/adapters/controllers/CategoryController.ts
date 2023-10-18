@@ -34,9 +34,9 @@ export default class CategoryController {
 
   async findById(request: Request, response: Response) {
 
-    const listCategoryUseCase = container.resolve(CategoryFindOneUseCase)
+    const findOneCategoryUseCase = container.resolve(CategoryFindOneUseCase)
     try {
-      const category = await listCategoryUseCase.execute(request.params.id)
+      const category = await findOneCategoryUseCase.execute(request.params.id)
 
       return response.status(200).json(category)
     } catch (error: any) {
@@ -46,9 +46,9 @@ export default class CategoryController {
 
   async delete(request: Request, response: Response) {
 
-    const listCategoryUseCase = container.resolve(CategoryDeleteUseCase)
+    const deleteCategoryUseCase = container.resolve(CategoryDeleteUseCase)
     try {
-      await listCategoryUseCase.execute(request.params.id)
+      await deleteCategoryUseCase.execute(request.params.id)
 
       return response.status(204).json({ message: "Category deleted successfully" })
     } catch (error: any) {
