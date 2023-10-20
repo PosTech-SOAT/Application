@@ -4,13 +4,13 @@ import { CategoryRepository } from '../CategoryRepository';
 import { SnackRepository } from '../SnackRepository';
 
 container.register('ClientRepository', {
-  useClass: ClientRepository,
+	useClass: ClientRepository,
 });
 
 container.register('CategoryRepository', {
-  useClass: CategoryRepository,
-})
+	useClass: CategoryRepository,
+});
 
 container.register('SnackRepository', {
-  useClass: SnackRepository,
-})
+	useClass: SnackRepository,
+});

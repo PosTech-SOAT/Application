@@ -5,6 +5,6 @@ import { CategoryRepository } from '../../database/typeorm/repositories/Category
 import { ICategoryRepositoryPort } from '../../../application/ports/ICategoryRepositoryPort';
 import { SnackRepository } from '../../database/typeorm/repositories/SnackRepository';
 
-container.registerSingleton<IClientRepositoryPort>("ClientRepository", ClientRepository);
-container.registerSingleton<ICategoryRepositoryPort>("CategoryRepository", CategoryRepository);
-container.registerSingleton<ICategoryRepositoryPort>("SnackRepository", SnackRepository);
+container.registerSingleton<IClientRepositoryPort>('ClientRepository', ClientRepository);
+container.registerSingleton<ICategoryRepositoryPort>('CategoryRepository', CategoryRepository);
+container.registerSingleton<ICategoryRepositoryPort>('SnackRepository', SnackRepository);

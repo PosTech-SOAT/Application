@@ -1,9 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { v4 as uuidV4 } from "uuid";
-import { Snack } from "./Snack";
-import { Client } from "./Client";
-import { Accompaniment } from "./Accompaniment";
-import { Drink } from "./Drink";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { v4 as uuidV4 } from 'uuid';
+import { Snack } from './Snack';
+import { Client } from './Client';
+import { Accompaniment } from './Accompaniment';
+import { Drink } from './Drink';
 
 enum OrderStatus {
   RECEBIDO = 'RECEBIDO',
@@ -12,44 +12,44 @@ enum OrderStatus {
   FINALIZADO = 'FINALIZADO',
 }
 
-@Entity("Orders")
+@Entity('Orders')
 export class Order {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  	id: string;
 
   @ManyToOne(() => Snack, { eager: true })
   @JoinColumn()
-  snack: Snack;
+  	snack: Snack;
 
   @ManyToOne(() => Accompaniment, { eager: true })
   @JoinColumn()
-  accompaniment: Accompaniment;
+  	accompaniment: Accompaniment;
 
   @ManyToOne(() => Drink, { eager: true })
   @JoinColumn()
-  drink: Drink;
+  	drink: Drink;
 
   @ManyToOne(() => Client, { eager: true })
   @JoinColumn()
-  client: Client;
+  	client: Client;
 
   @Column({
-    type: 'enum',
-    enum: OrderStatus,
-    default: OrderStatus.RECEBIDO,
+  	type: 'enum',
+  	enum: OrderStatus,
+  	default: OrderStatus.RECEBIDO,
   })
-  status: OrderStatus;
+  	status: OrderStatus;
 
   @CreateDateColumn()
-  createdAt: Date = new Date();
+  	createdAt: Date = new Date();
 
   @UpdateDateColumn()
-  updatedAt: Date = new Date();
+  	updatedAt: Date = new Date();
 
   constructor() {
-    if (!this.id) {
-      this.id = uuidV4();
-    }
+  	if (!this.id) {
+  		this.id = uuidV4();
+  	}
   }
 
 }

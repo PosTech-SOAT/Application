@@ -1,4 +1,4 @@
-import { ICategory } from "./CategoryEntity";
+import { ICategory } from './CategoryEntity';
 
 export interface IAccompaniment {
   id: string;

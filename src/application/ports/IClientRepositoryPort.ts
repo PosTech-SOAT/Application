@@ -1,4 +1,4 @@
-import { IClient } from "../../domain/entities/ClientEntity";
+import { IClient } from '../../domain/entities/ClientEntity';
 
 export type CreateClientParams = {
   name: string;

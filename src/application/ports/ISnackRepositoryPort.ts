@@ -1,5 +1,5 @@
-import { ICategory } from "../../domain/entities/CategoryEntity"
-import { ISnack } from "../../domain/entities/SnackEntity"
+import { ICategory } from '../../domain/entities/CategoryEntity';
+import { ISnack } from '../../domain/entities/SnackEntity';
 
 export type CreateSnackParams = {
     name: string

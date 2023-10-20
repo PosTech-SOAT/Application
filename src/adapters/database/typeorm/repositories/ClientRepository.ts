@@ -1,61 +1,61 @@
-import { DataSource, EntityRepository, Repository } from "typeorm";
-import { IClient } from "../../../../domain/entities/ClientEntity";
-import { CreateClientParamsDto } from "../../../../dto/CreateClientParamsDto";
-import { Client } from "../entities/Client";
-import { DbConnection } from "../../../../infra/database/PostgreSQLConnection";
-import { IClientRepositoryPort } from "../../../../application/ports/IClientRepositoryPort";
+import { Repository } from 'typeorm';
+import { IClient } from '../../../../domain/entities/ClientEntity';
+import { CreateClientParamsDto } from '../../../../dto/CreateClientParamsDto';
+import { Client } from '../entities/Client';
+import { DbConnection } from '../../../../infra/database/PostgreSQLConnection';
+import { IClientRepositoryPort } from '../../../../application/ports/IClientRepositoryPort';
 
 export class ClientRepository implements IClientRepositoryPort{
-  private connection: typeof DbConnection;
+	private connection: typeof DbConnection;
 
-  constructor() {
-    this.connection = DbConnection;
-  }
+	constructor() {
+		this.connection = DbConnection;
+	}
 
-  private async getRepo(): Promise<Repository<Client>> {
-    if (!this.connection) {
-      throw new Error("A conexão não foi estabelecida.");
-    }
-    
-    const con = await this.connection.getConnection();
-    
-    if (!con) {
-      throw new Error("A conexão não foi obtida com sucesso.");
-    }
+	private async getRepo(): Promise<Repository<Client>> {
+		if (!this.connection) {
+			throw new Error('A conexão não foi estabelecida.');
+		}
 
-    return con.getRepository(Client);
-  }
+		const con = await this.connection.getConnection();
 
-  async createClient(params: CreateClientParamsDto): Promise<IClient> {
-    const repo = await this.getRepo();
+		if (!con) {
+			throw new Error('A conexão não foi obtida com sucesso.');
+		}
 
-    const client = repo.create(params);
+		return con.getRepository(Client);
+	}
 
-    return await repo.save(client);
-  }
+	async createClient(params: CreateClientParamsDto): Promise<IClient> {
+		const repo = await this.getRepo();
 
-  async findByCPF(cpf: string): Promise<IClient | null> {
-    const repo = await this.getRepo();
+		const client = repo.create(params);
 
-    const client = await repo.findOne({ where: { cpf } });
+		return await repo.save(client);
+	}
 
-    return client || null;
-  }
+	async findByCPF(cpf: string): Promise<IClient | null> {
+		const repo = await this.getRepo();
 
-  async findById(id: string): Promise<IClient | null> {
-    const repo = await this.getRepo();
+		const client = await repo.findOne({ where: { cpf } });
 
-    const client = await repo.findOne({ where: { id } });
+		return client || null;
+	}
 
-    return client || null;
-  }
+	async findById(id: string): Promise<IClient | null> {
+		const repo = await this.getRepo();
 
-  async list(): Promise<IClient[]> {
-    const repo = await this.getRepo();
+		const client = await repo.findOne({ where: { id } });
 
-    const clients = await repo.find();
+		return client || null;
+	}
 
-    return clients;
-  }
-    
+	async list(): Promise<IClient[]> {
+		const repo = await this.getRepo();
+
+		const clients = await repo.find();
+
+		return clients;
+	}
+
 }

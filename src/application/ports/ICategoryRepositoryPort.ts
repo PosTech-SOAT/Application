@@ -1,4 +1,4 @@
-import { ICategory } from "../../domain/entities/CategoryEntity";
+import { ICategory } from '../../domain/entities/CategoryEntity';
 
 export type CreateCategoryParams = {
     name: string

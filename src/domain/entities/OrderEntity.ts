@@ -1,12 +1,12 @@
-import { IAccompaniment } from "./AccompanimentEntity";
-import { IClient } from "./ClientEntity";
-import { IDrink } from "./DrinkEntity";
-import { ISnack } from "./SnackEntity";
+import { IAccompaniment } from './AccompanimentEntity';
+import { IClient } from './ClientEntity';
+import { IDrink } from './DrinkEntity';
+import { ISnack } from './SnackEntity';
 
 enum Status {
   recebido = 'RECEBIDO',
   emPreparacao = 'EM PREPARACAO',
-  pronto = 'PRONTO', 
+  pronto = 'PRONTO',
   finalizado = 'FINALIZADO'
 }
 
