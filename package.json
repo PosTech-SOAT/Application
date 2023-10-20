@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --inspect --transpile-only --ignore-watch node_modules src/index.ts",
     "build": "tsc",
-    "migration:generate": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:generate ./src/infra/typeorm/migrations/CreateClient",
+    "migration:generate": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:generate",
     "migration:run": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:run",
     "migration:revert": "typeorm-ts-node-commonjs -d ./src/infra/factories/PostgreSQLDataSource.ts migration:revert"
   },

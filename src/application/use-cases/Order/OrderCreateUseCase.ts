@@ -8,7 +8,7 @@ import { IClientRepositoryPort } from "../../ports/IClientRepositoryPort";
 
 
 @injectable()
-export default class OrderreateUseCase {
+export default class OrderCreateUseCase {
   constructor(
     @inject("OrderRepository") 
     private orderRepository: IOrderRepositoryPort,

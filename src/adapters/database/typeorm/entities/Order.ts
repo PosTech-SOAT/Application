@@ -7,7 +7,7 @@ import { Drink } from './Drink';
 
 export enum OrderStatus {
   RECEBIDO = 'RECEBIDO',
-  EM_PREPARACAO = 'EM PREPARACAO',
+  EM_PREPARACAO = 'EM_PREPARACAO',
   PRONTO = 'PRONTO',
   FINALIZADO = 'FINALIZADO',
 }

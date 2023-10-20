@@ -6,7 +6,7 @@ import { IDrinkRepositoryPort } from "../../ports/IDrinkRepositoryPort";
 @injectable()
 export default class DrinkFindOneUseCase {
   constructor(
-    @inject("AccompanimentRepository") 
+    @inject("DrinkRepository") 
     private drinkRepository: IDrinkRepositoryPort
   ) {}
 

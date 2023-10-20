@@ -4,6 +4,8 @@ import OrderDeleteUseCase from "../../application/use-cases/Order/OrderDeleteUse
 import OrderFindOneUseCase from "../../application/use-cases/Order/OrderFindOneUseCase";
 import OrderListUseCase from "../../application/use-cases/Order/OrderListUseCase";
 import OrderCreateUseCase from "../../application/use-cases/Order/OrderCreateUseCase";
+import OrderUpdateStatusUseCase from "../../application/use-cases/Order/OrderUpdateStatusUseCase";
+import { OrderStatus } from "../database/typeorm/entities/Order";
 
 export default class OrderController {
   async create(request: Request, response: Response) {
@@ -43,13 +45,25 @@ export default class OrderController {
     }
   }
 
+  async changeOrderStatus(request: Request, response: Response) {
+
+    const findOneOrderUseCase = container.resolve(OrderUpdateStatusUseCase)
+    try {
+      const Order = await findOneOrderUseCase.execute(request.params.id, request.query.status as OrderStatus)
+
+      return response.status(200).json({ message: 'Order updated successfully' })
+    } catch (error: any) {
+      return response.status(400).json({ message: error.message })
+    }
+  }
+
   async delete(request: Request, response: Response) {
 
     const deleteOrderUseCase = container.resolve(OrderDeleteUseCase)
     try {
       await deleteOrderUseCase.execute(request.params.id)
 
-      return response.status(204).json({ message: "Order deleted successfully" })
+      return response.status(200).json({ message: "Order deleted successfully" })
     } catch (error: any) {
       return response.status(400).json({ message: error.message })
     }

@@ -47,8 +47,8 @@ export class CategoryRepository implements ICategoryRepositoryPort {
 	}
 	async create(params: CreateCategoryParams): Promise<ICategory> {
 		const connection = await this.getConnection();
-		const client = connection.create(params);
+		const category = connection.create(params);
 
-		return connection.save(client);
+		return connection.save(category);
 	}
 }

@@ -48,8 +48,8 @@ export class SnackRepository implements ISnackRepositoryPort {
 	}
 	async create(params: CreateSnackParams): Promise<ISnack> {
 		const connection = await this.getConnection();
-		const client = connection.create(params);
+		const snack = connection.create(params);
 
-		return connection.save(client);
+		return connection.save(snack);
 	}
 }
