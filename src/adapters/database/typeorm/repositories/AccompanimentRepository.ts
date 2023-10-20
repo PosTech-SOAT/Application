@@ -35,7 +35,7 @@ export class AccompanimentRepository implements IAccompanimentRepositoryPort {
   async findById(id: string): Promise<IAccompaniment | null> {
     const connection = await this.getConnection();
 
-    return connection.findOne({ where: { id}, relations: ['category'] })  
+    return connection.findOneOrFail({ where: { id }, relations: ['category'] })  
   }
   async delete(id: string){
     const connection = await this.getConnection();

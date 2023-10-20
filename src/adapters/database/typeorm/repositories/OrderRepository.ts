@@ -35,7 +35,9 @@ export class OrderRepository implements IOrderRepositoryPort {
   async findById(id: string): Promise<OrderDto | null> {
     const connection = await this.getConnection();
     try {
-    const order = await connection.findOne({ where: { id}, relations: ['drink', 'snack', 'accompaniment' ] });
+    const order = await connection.createQueryBuilder('find_by_id')
+    .where("id = :id", { id })
+    .getOne()
     
     if (!order) {
       throw new Error("Order doesn't exists")

@@ -30,7 +30,7 @@ export default class OrderCreateUseCase {
     const accompaniment = accompanimentId && await this.accompanimentRepository.findById(accompanimentId)
     const snack = snackId && await this.snackRepository.findById(snackId)
 
-    if (!drink && !accompaniment && snack) {
+    if (!drink && !accompaniment && !snack) {
       throw new Error("The order is incomplete. You must select either a drink, accompaniment or snack")
     }
 

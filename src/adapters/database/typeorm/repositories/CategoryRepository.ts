@@ -34,7 +34,10 @@ export class CategoryRepository implements ICategoryRepositoryPort {
 	async findById(id: string): Promise<ICategory | null> {
 		const connection = await this.getConnection();
 
-		return connection.findOne({ where: { id} });
+		return connection.createQueryBuilder('find_by_id')
+		.where("id = :id", { id })
+		.getOne()
+		
 	}
 	async delete(id: string){
 		const connection = await this.getConnection();

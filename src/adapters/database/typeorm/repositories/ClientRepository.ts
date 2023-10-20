@@ -37,7 +37,7 @@ export class ClientRepository implements IClientRepositoryPort{
 	async findByCPF(cpf: string): Promise<IClient | null> {
 		const repo = await this.getRepo();
 
-		const client = await repo.findOne({ where: { cpf } });
+		const client = await repo.findOneOrFail({ where: { cpf } });
 
 		return client || null;
 	}
@@ -45,7 +45,10 @@ export class ClientRepository implements IClientRepositoryPort{
 	async findById(id: string): Promise<IClient | null> {
 		const repo = await this.getRepo();
 
-		const client = await repo.findOne({ where: { id } });
+		const client = await repo.createQueryBuilder('find_by_id')
+						     .where("id = :id", { id })
+							 .getOne()
+							 
 
 		return client || null;
 	}
