@@ -4,6 +4,7 @@ import { DataSource } from "typeorm";
 import { Client } from "../../adapters/database/typeorm/entities/Client";
 import { Category } from "../../adapters/database/typeorm/entities/Category";
 import { Snack } from "../../adapters/database/typeorm/entities/Snack";
+import { Drink } from "../../adapters/database/typeorm/entities/Drink";
 
 const port = parseInt(process.env.DB_PORT || '5432');
 

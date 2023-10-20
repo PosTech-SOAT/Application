@@ -12,17 +12,17 @@ export default class SnackCreateUseCase {
     private categoryRepository: ICategoryRepositoryPort,
 	) {}
 
-	async execute(params: CreateSnackExecuteParams): Promise<ICategory> {
-		const {categoryId, ...rest} = params;
-		const category = await this.categoryRepository.findById(categoryId);
-		if (!category) {
-			throw new Error('The product\'s category doesn\'t exist');
-		}
-		const client = await this.snackRepository.create({
-			...rest,
-			category,
-		});
-
-		return client;
-	}
+  async execute(params: CreateSnackExecuteParams): Promise<ICategory> {
+    const {categoryId, ...rest} = params;
+    const category = await this.categoryRepository.findById(categoryId)
+    if (!category) {
+      throw new Error("The product's category doesn't exist")
+    }
+    const snack = await this.snackRepository.create({
+      ...rest,
+      category,
+    });
+  
+    return snack;
+  }  
 }

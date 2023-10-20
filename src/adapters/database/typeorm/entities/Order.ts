@@ -5,7 +5,7 @@ import { Client } from './Client';
 import { Accompaniment } from './Accompaniment';
 import { Drink } from './Drink';
 
-enum OrderStatus {
+export enum OrderStatus {
   RECEBIDO = 'RECEBIDO',
   EM_PREPARACAO = 'EM PREPARACAO',
   PRONTO = 'PRONTO',

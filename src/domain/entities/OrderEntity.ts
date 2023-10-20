@@ -1,21 +1,16 @@
-import { IAccompaniment } from './AccompanimentEntity';
-import { IClient } from './ClientEntity';
-import { IDrink } from './DrinkEntity';
-import { ISnack } from './SnackEntity';
+import { OrderStatus } from "../../adapters/database/typeorm/entities/Order";
+import { IAccompaniment } from "./AccompanimentEntity";
+import { IClient } from "./ClientEntity";
+import { IDrink } from "./DrinkEntity";
+import { ISnack } from "./SnackEntity";
 
-enum Status {
-  recebido = 'RECEBIDO',
-  emPreparacao = 'EM PREPARACAO',
-  pronto = 'PRONTO',
-  finalizado = 'FINALIZADO'
-}
 
 export interface IOrder {
   id: string;
-  snack: ISnack;
-  accompaniment: IAccompaniment;
-  drink: IDrink;
-  status: Status;
+  snack?: ISnack;
+  accompaniment?: IAccompaniment;
+  drink?: IDrink;
+  status: OrderStatus;
   client: IClient;
 }
 

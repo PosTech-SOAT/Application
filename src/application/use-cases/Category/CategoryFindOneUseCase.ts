@@ -1,6 +1,6 @@
-import { inject, injectable } from 'tsyringe';
-import { ICategoryRepositoryPort } from '../../ports/ICategoryRepositoryPort';
-import { ICategory } from '../../../domain/entities/CategoryEntity';
+import { inject, injectable } from "tsyringe";
+import { ICategoryRepositoryPort } from "../../ports/ICategoryRepositoryPort";
+import { ICategory } from "../../../domain/entities/CategoryEntity";
 
 @injectable()
 export default class CategoryFindOneUseCase {
