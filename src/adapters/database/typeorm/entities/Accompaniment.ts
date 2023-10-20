@@ -2,15 +2,15 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Up
 import { v4 as uuidV4 } from "uuid";
 import { Category } from "./Category";
 
-@Entity("Snacks")
-export class Snack {
+@Entity("Accompaniment")
+export class Accompaniment {
   @PrimaryGeneratedColumn("uuid")
   id: string
 
   @Column({type: "varchar", length: 100, unique: true})
   name: string;
 
-  @ManyToOne(() => Category, (category) => category.snacks)
+  @ManyToOne(() => Category, (category) => category.accompaniments)
   category: Category;
 
   @Column({type: "varchar", length: 255})
