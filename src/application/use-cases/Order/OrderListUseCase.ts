@@ -1,0 +1,23 @@
+import { inject, injectable } from "tsyringe";
+import { IOrderRepositoryPort } from "../../ports/IOrderRepositoryPort";
+import { IOrder } from "../../../domain/entities/OrderEntity";
+
+
+@injectable()
+export default class OrderListUseCase {
+  constructor(
+    @inject("OrderRepository") 
+    private orderRepository: IOrderRepositoryPort
+  ) {}
+
+  async execute(): Promise<Array<IOrder>> {
+    return (await this.orderRepository.list()).map((order) => ({
+      id: order.id,
+      snack: order.snack,
+      client: order.client,
+      accompaniment: order.accompaniment,
+      drink: order.drink,
+      status: order.status,
+    }));
+  }  
+}
