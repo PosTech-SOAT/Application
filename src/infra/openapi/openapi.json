@@ -36,7 +36,7 @@
           }
         }
       },
-			"get": {
+      "get": {
         "tags": ["Client"],
         "summary": "List all clients",
         "responses": {
@@ -110,7 +110,7 @@
           }
         }
       },
-			"get": {
+      "get": {
         "tags": ["Category"],
         "summary": "List all categories",
         "responses": {
@@ -188,6 +188,25 @@
             "description": "Invalid request"
           }
         }
+      },
+      "get": {
+        "tags": ["Product"],
+        "summary": "List all products",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListProductsByCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/products/listByCategory/{id}": {
@@ -222,7 +241,7 @@
         }
       }
     },
-    "/api/products/editProduct/{id}": {
+    "/api/products/{id}": {
       "patch": {
         "tags": ["Product"],
         "summary": "Edit an existing product",
@@ -255,9 +274,7 @@
             "description": "Invalid request"
           }
         }
-      }
-    },
-    "/api/products/deleteProduct/{id}": {
+      },
       "delete": {
         "tags": ["Product"],
         "summary": "Delete a existing product",
@@ -269,7 +286,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Id prudct"
+            "description": "Product Id"
           }
         ],
         "responses": {
@@ -306,9 +323,9 @@
           }
         }
       },
-			"get": {
+      "get": {
         "tags": ["Order"],
-        "summary": "List order",
+        "summary": "List orders",
         "responses": {
           "200": {
             "description": "Success",
@@ -324,8 +341,96 @@
             }
           }
         }
-			}
-    }
+      }
+    },
+    "/api/orders/{id}": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "List orders by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Order"],
+        "summary": "Edit an existing product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order id"
+          }
+        ],
+        "requestBody": {
+          "description": "Edit an existing order",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Product edited successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Order"],
+        "summary": "Delete a existing order",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Order Id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Order deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
   },
   "components": {
     "schemas": {
@@ -432,7 +537,7 @@
             "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
           },
           "price": {
-            "type": "float",
+            "type": "number",
             "example": 26.99
           },
           "categoryId": {
@@ -444,18 +549,14 @@
       "CreateOrder": {
         "type": "object",
         "properties": {
-          "productIds":{
-						"type":"array",
+          "products":{
+            "type":"array",
             "items": {
               "type": "string"
             }
-					},
-					"clientId": {
-					  "type": "string"
-					},
-					"status": {
-            "type": "string",
-            "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
+          },
+          "clientId": {
+            "type": "string"
           }
         }
       },
@@ -543,14 +644,17 @@
             }
           },
           "status": {
-            "type": "string",
-            "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
+            "$ref": "#/components/schemas/PedidoStatus"
           },
           "total": {
             "type": "number",
             "example": 50.99
           }
         }
+      },
+      "PedidoStatus": {
+         "type": "string",
+          "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
       }
     }
   }
