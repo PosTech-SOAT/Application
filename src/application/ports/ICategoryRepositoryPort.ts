@@ -1,7 +1,8 @@
 import { ICategory } from '../../domain/entities/CategoryEntity';
 
 export type CreateCategoryParams = {
-    name: string
+    name: string,
+		description: string,
 }
 
 export interface ICategoryRepositoryPort {

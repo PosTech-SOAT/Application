@@ -7,13 +7,13 @@ import CategoryDeleteUseCase from '../../application/use-cases/Category/Category
 
 export default class CategoryController {
 	async create(request: Request, response: Response) {
-		const { name } = request.body;
-		if (!name) {
+		const category = request.body;
+		if (!category) {
 			return response.status(400).json({ message: 'Missing required data' });
 		}
 		const createCategoryUseCase = container.resolve(CategoryCreateUseCase);
 		try {
-			await createCategoryUseCase.execute({ name });
+			await createCategoryUseCase.execute(category);
 
 			return response.status(201).json({ message: 'Category created successfully' });
 		} catch (error: any) {

@@ -1,8 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
-import { Snack } from './Snack';
-import { Drink } from './Drink';
-import { Accompaniment } from './Accompaniment';
+import { Product } from './Product';
 
 @Entity('Categories')
 export class Category {
@@ -12,14 +10,11 @@ export class Category {
   @Column({type: 'varchar', length: 25, unique: true})
   	name: string;
 
-  @OneToMany(() => Snack, (snack) => snack.category)
-  	snacks: Array<Snack>;
+	@Column({type: 'varchar'})
+		description: string;
 
-  @OneToMany(() => Drink, (drink) => drink.category)
-  	drinks: Array<Drink>;
-
-  @OneToMany(() => Accompaniment, (accompaniment) => accompaniment.category)
-  	accompaniments: Array<Drink>;
+	@OneToMany(() => Product, product => product.category)
+  	products: Product[];
 
   @CreateDateColumn()
   	createdAt: Date = new Date();

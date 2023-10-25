@@ -9,8 +9,8 @@ export default class ClientFindOneUseCase {
     private clientRepository: IClientRepositoryPort
 	) {}
 
-	async execute(id: string): Promise<IClient | null> {
-		const client = await this.clientRepository.findById(id);
+	async execute(cpf: string): Promise<IClient | null> {
+		const client = await this.clientRepository.findByCPF(cpf);
 		return client;
 	}
 }

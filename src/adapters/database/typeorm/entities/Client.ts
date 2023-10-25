@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
+import { Order } from './Order';
 
 @Entity('Clients')
 export class Client {
@@ -14,6 +15,9 @@ export class Client {
 
   @Column({type: 'varchar', length: 11})
   	cpf: string;
+
+	@OneToMany(() => Order, orders => orders.client)
+	 orders: string;
 
   @CreateDateColumn()
   	createdAt: Date = new Date();

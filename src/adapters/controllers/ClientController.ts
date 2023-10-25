@@ -36,11 +36,11 @@ export default class ClientController {
 		}
 	}
 
-	async findById(request: Request, response: Response) {
+	async findByCpf(request: Request, response: Response) {
 		const clientListUseCase = container.resolve(ClientFindOneUseCase);
 
 		try {
-			const client = await clientListUseCase.execute(request.params.id);
+			const client = await clientListUseCase.execute(request.params.cpf);
 
 			return response.status(200).json(client);
 		} catch (error: any) {

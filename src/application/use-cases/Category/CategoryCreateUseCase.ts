@@ -1,6 +1,6 @@
-import { inject, injectable } from "tsyringe";
-import { CreateCategoryParams, ICategoryRepositoryPort } from "../../ports/ICategoryRepositoryPort";
-import { ICategory } from "../../../domain/entities/CategoryEntity";
+import { inject, injectable } from 'tsyringe';
+import { CreateCategoryParams, ICategoryRepositoryPort } from '../../ports/ICategoryRepositoryPort';
+import { ICategory } from '../../../domain/entities/CategoryEntity';
 
 @injectable()
 export default class CategoryCreateUseCase {
@@ -9,12 +9,13 @@ export default class CategoryCreateUseCase {
     private categoryRepository: ICategoryRepositoryPort
 	) {}
 
-  async execute(params: CreateCategoryParams): Promise<ICategory> {
-  
-    const category = await this.categoryRepository.create({
-      name: params.name,
-    });
-  
-    return category;
-  }  
+	async execute(params: CreateCategoryParams): Promise<ICategory> {
+
+		const category = await this.categoryRepository.create({
+			name: params.name,
+			description: params.description,
+		});
+
+		return category;
+	}
 }

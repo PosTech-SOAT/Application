@@ -1,5 +1,5 @@
-import { PostgreSQLFactory } from "./PostgreSQLFactory";
+import { PostgreSQLFactory } from './PostgreSQLFactory';
 
-const dataSource = new PostgreSQLFactory()
+const dataSource = new PostgreSQLFactory();
 
-export default dataSource.dataSource
+export default dataSource.dataSource;

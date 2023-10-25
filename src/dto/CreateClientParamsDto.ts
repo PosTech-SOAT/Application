@@ -1,6 +1,7 @@
-export class CreateClientParamsDto {
-	id: string;
-	name: string;
-	email: string;
-	cpf: string;
+import { IClient } from '../domain/entities/ClientEntity';
+
+export interface CreateClientParamsDto extends Omit<IClient, 'id'> {
+	name: string,
+	cpf: string,
+	email: string
 }

@@ -1,53 +1,43 @@
-import { inject, injectable } from "tsyringe";
-import { CreateOrderExecuteParams, IOrderRepositoryPort } from "../../ports/IOrderRepositoryPort";
-import { IDrinkRepositoryPort } from "../../ports/IDrinkRepositoryPort";
-import { ISnackRepositoryPort } from "../../ports/ISnackRepositoryPort";
-import { IAccompanimentRepositoryPort } from "../../ports/IAccompanimentRepositoryPort";
-import { IOrder } from "../../../domain/entities/OrderEntity";
-import { IClientRepositoryPort } from "../../ports/IClientRepositoryPort";
+import { inject, injectable } from 'tsyringe';
+import { CreateOrderExecuteParams, CreateOrderParams, IOrderRepositoryPort } from '../../ports/IOrderRepositoryPort';
+import { IOrder } from '../../../domain/entities/OrderEntity';
+import { IClientRepositoryPort } from '../../ports/IClientRepositoryPort';
+import { IProductRepositoryPort } from '../../ports/IProductRespositoryPort';
 
 
 @injectable()
 export default class OrderCreateUseCase {
-  constructor(
-    @inject("OrderRepository") 
+	constructor(
+    @inject('OrderRepository')
     private orderRepository: IOrderRepositoryPort,
-    @inject("ClientRepository")
+    @inject('ClientRepository')
     private clientRepository: IClientRepositoryPort,
-    @inject("DrinkRepository")
-    private drinkRepository: IDrinkRepositoryPort,
-    @inject("SnackRepository")
-    private snackRepository: ISnackRepositoryPort,
-    @inject("AccompanimentRepository")
-    private accompanimentRepository: IAccompanimentRepositoryPort,
-  ) {}
+		@inject('ProductRepository')
+		private productRepository: IProductRepositoryPort
+	) {}
 
-  async execute(params: CreateOrderExecuteParams): Promise<IOrder> {
-    const {drinkId, snackId, accompanimentId, clientId, ...rest} = params
+	async execute(params: CreateOrderExecuteParams): Promise<IOrder> {
+		const {clientId, productIds, ...rest} = params;
 
-    const client = await this.clientRepository.findById(clientId)
-    const drink = drinkId && await this.drinkRepository.findById(drinkId)
-    const accompaniment = accompanimentId && await this.accompanimentRepository.findById(accompanimentId)
-    const snack = snackId && await this.snackRepository.findById(snackId)
+		const products = await this.productRepository.list(productIds);
 
-    if (!drink && !accompaniment && !snack) {
-      throw new Error("The order is incomplete. You must select either a drink, accompaniment or snack")
-    }
+		const client = await this.clientRepository.findById(clientId);
 
-    if (!client) {
-      throw new Error("A client must be informed")
 
-    }
-    
+		if (!products.length) {
+			throw new Error('The order is incomplete. You must select either a drink, accompaniment or snack');
+		}
 
-    const order = await this.orderRepository.create({
-      ...rest,
-      client,
-      ...(drink ? { drink } : {}),
-      ...(accompaniment ? { accompaniment } : {}),
-      ...(snack ? { snack } : {}),
-    });
-  
-    return order;
-  }  
+		if (!client) {
+			throw new Error('A client must be informed');
+		}
+
+		const order = await this.orderRepository.create({
+			...rest,
+			client,
+			products
+		} as CreateOrderParams);
+
+		return order;
+	}
 }
