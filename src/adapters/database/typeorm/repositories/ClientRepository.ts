@@ -12,22 +12,12 @@ export class ClientRepository implements IClientRepositoryPort{
 		this.connection = DbConnection;
 	}
 
-	private async getRepo(): Promise<Repository<Client>> {
-		if (!this.connection) {
-			throw new Error('A conexão não foi estabelecida.');
-		}
-
-		const con = await this.connection.getConnection();
-
-		if (!con) {
-			throw new Error('A conexão não foi obtida com sucesso.');
-		}
-
-		return con.getRepository(Client);
+	private getRepo(): Repository<Client> {
+		return this.connection.getConnection().getRepository(Client);
 	}
 
 	async createClient(params: CreateClientParamsDto): Promise<IClient> {
-		const repo = await this.getRepo();
+		const repo = this.getRepo();
 
 		const client = repo.create(params);
 
@@ -35,7 +25,7 @@ export class ClientRepository implements IClientRepositoryPort{
 	}
 
 	async findByCPF(cpf: string): Promise<IClient | null> {
-		const repo = await this.getRepo();
+		const repo = this.getRepo();
 
 		const client = await repo.findOne({ where: { cpf } });
 
@@ -43,7 +33,7 @@ export class ClientRepository implements IClientRepositoryPort{
 	}
 
 	async findById(id: string): Promise<IClient | null> {
-		const repo = await this.getRepo();
+		const repo = this.getRepo();
 
 		const client = await repo.createQueryBuilder('find_by_id')
 						     .where('id = :id', { id })
@@ -54,7 +44,7 @@ export class ClientRepository implements IClientRepositoryPort{
 	}
 
 	async list(): Promise<IClient[]> {
-		const repo = await this.getRepo();
+		const repo = this.getRepo();
 
 		const clients = await repo.find();
 

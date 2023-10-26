@@ -5,34 +5,23 @@ import { Category } from '../entities/Category';
 import { ICategory } from '../../../../domain/entities/CategoryEntity';
 
 export class CategoryRepository implements ICategoryRepositoryPort {
-
 	private connection: typeof DbConnection;
 
 	constructor() {
 		this.connection = DbConnection;
 	}
 
-	private async getConnection(): Promise<Repository<Category>> {
-		if (!this.connection) {
-			throw new Error('A conexão não foi estabelecida.');
-		}
-
-		const con = await this.connection.getConnection();
-
-		if (!con) {
-			throw new Error('A conexão não foi obtida com sucesso.');
-		}
-
-		return con.getRepository(Category);
+	private getRepo(): Repository<Category> {
+		return this.connection.getConnection().getRepository(Category);
 	}
 
 	async list(): Promise<ICategory[]> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 
 		return connection.find();
 	}
 	async findById(id: string): Promise<ICategory | null> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 
 		return connection.createQueryBuilder('find_by_id')
 			.where('id = :id', { id })
@@ -40,7 +29,7 @@ export class CategoryRepository implements ICategoryRepositoryPort {
 
 	}
 	async delete(id: string){
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		await connection.createQueryBuilder('Categories')
 			.delete()
 			.from(Category)
@@ -50,7 +39,7 @@ export class CategoryRepository implements ICategoryRepositoryPort {
 	}
 
 	async create(params: CreateCategoryParams): Promise<ICategory> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		const category = connection.create(params);
 
 		return connection.save(category);

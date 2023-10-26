@@ -14,7 +14,9 @@
   "paths": {
     "/api/clients": {
       "post": {
-        "tags": ["Client"],
+        "tags": [
+          "Client"
+        ],
         "summary": "Create a new client",
         "requestBody": {
           "description": "New client details",
@@ -45,7 +47,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Client"
                   }
@@ -69,7 +71,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Client cpf"
+            "description": "Client cpf",
+            "example": "23498765400"
           }
         ],
         "responses": {
@@ -119,7 +122,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Categories"
                   }
@@ -132,7 +135,9 @@
     },
     "/api/categories/{id}": {
       "patch": {
-        "tags": ["Category"],
+        "tags": [
+          "Category"
+        ],
         "summary": "Edit an existing category",
         "parameters": [
           {
@@ -142,7 +147,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Category id"
+            "description": "Category id",
+            "example": "489a467a-298b-44c4-9e21-7be441dda441"
           }
         ],
         "requestBody": {
@@ -198,7 +204,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/ListProductsByCategory"
                   }
@@ -221,7 +227,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Category id"
+            "description": "Category id",
+            "example": "489a467a-298b-44c4-9e21-7be441dda441"
           }
         ],
         "responses": {
@@ -230,7 +237,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/ListProductsByCategory"
                   }
@@ -253,18 +260,17 @@
             "schema": {
               "type": "string"
             },
-            "description": "product ID"
+            "description": "Product Id",
+            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/ListProductsByCategory"
-                  }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProductsByCategory"
                 }
               }
             }
@@ -282,7 +288,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "product ID"
+            "description": "Product Id",
+            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
           }
         ],
         "requestBody": {
@@ -315,7 +322,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Product Id"
+            "description": "Product Id",
+            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
           }
         ],
         "responses": {
@@ -361,7 +369,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Order"
                   }
@@ -384,7 +392,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Order id"
+            "description": "Order Id",
+            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
           }
         ],
         "responses": {
@@ -393,7 +402,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type":"array",
+                  "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Order"
                   }
@@ -414,7 +423,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Order id"
+            "description": "Order Id",
+            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
           }
         ],
         "requestBody": {
@@ -447,7 +457,8 @@
             "schema": {
               "type": "string"
             },
-            "description": "Order Id"
+            "description": "Order Id",
+            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
           }
         ],
         "responses": {
@@ -504,7 +515,7 @@
         }
       },
       "CreateEditCategory": {
-         "type": "object",
+        "type": "object",
         "properties": {
           "name": {
             "type": "string",
@@ -545,7 +556,7 @@
             "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
           },
           "price": {
-            "type": "string",
+            "type": "number",
             "example": 26.99
           },
           "categoryName": {
@@ -554,7 +565,7 @@
           }
         }
       },
-      "CreateEditProduct":{
+      "CreateEditProduct": {
         "type": "object",
         "properties": {
           "name": {
@@ -578,14 +589,16 @@
       "CreateOrder": {
         "type": "object",
         "properties": {
-          "products":{
-            "type":"array",
+          "products": {
+            "type": "array",
             "items": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             }
           },
           "clientId": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
@@ -601,7 +614,7 @@
             "example": "Cacau"
           },
           "snack": {
-            "type":"array",
+            "type": "array",
             "items": {
               "properties": {
                 "id": {
@@ -625,7 +638,7 @@
             }
           },
           "accompaniment": {
-            "type":"array",
+            "type": "array",
             "items": {
               "properties": {
                 "id": {
@@ -636,20 +649,20 @@
                   "type": "string",
                   "example": "Batata Rústica"
                 },
-                 "description": {
+                "description": {
                   "type": "string",
                   "example": "Batata rústica tamanho grande, com acompanhamento de um molho especial da casa a sua escolha"
                 },
                 "price": {
                   "type": "number",
                   "format": "float",
-                  "example": 17.00
+                  "example": 17
                 }
               }
             }
           },
           "drink": {
-            "type":"array",
+            "type": "array",
             "items": {
               "properties": {
                 "id": {
@@ -660,7 +673,7 @@
                   "type": "string",
                   "example": "Coca Cola"
                 },
-                 "description": {
+                "description": {
                   "type": "string",
                   "example": "Lata 350ml"
                 },
@@ -683,7 +696,12 @@
       },
       "PedidoStatus": {
         "type": "string",
-        "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
+        "enum": [
+          "EM_PREPARACAO",
+          "PRONTO",
+          "RECEBIDO",
+          "FINALIZADO"
+        ]
       }
     }
   }

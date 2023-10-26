@@ -6,8 +6,8 @@ export type CreateCategoryParams = {
 }
 
 export interface ICategoryRepositoryPort {
-    list(): Promise<Array<ICategory>>
-    findById(id: string): Promise<ICategory | null>
-    delete(id: string): Promise<any>
-    create(params: CreateCategoryParams): Promise<ICategory>
+	list(): Promise<Array<ICategory>>
+	findById(id: string): Promise<ICategory | null>
+	delete(id: string): Promise<any>
+	create(params: CreateCategoryParams): Promise<ICategory>
 }

@@ -13,6 +13,7 @@ export default class CategoryListUseCase {
 		return (await this.categoryRepository.list()).map((category) => ({
 			id: category.id,
 			name: category.name,
+			description: category.description,
 		}));
 	}
 }

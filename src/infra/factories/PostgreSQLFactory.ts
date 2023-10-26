@@ -14,11 +14,11 @@ export class PostgreSQLFactory {
 	constructor() {
 		this.data = new DataSource({
 			type: 'postgres',
-			host: process.env.DB_HOST,
+			host: process.env.DB_HOST || 'database',
 			port: port,
-			username: process.env.DB_USER,
-			password: process.env.DB_PASS,
-			database: process.env.DB_NAME,
+			username: process.env.DB_USER || 'root',
+			password: process.env.DB_PASS || 'root',
+			database: process.env.DB_NAME || 'postech',
 			entities: [Client, Category, Order, Product],
 			migrations: ['./src/infra/typeorm/migrations/*.ts'],
 			migrationsTableName: 'Migrations',

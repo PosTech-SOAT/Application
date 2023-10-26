@@ -23,7 +23,6 @@ export default class OrderCreateUseCase {
 
 		const client = await this.clientRepository.findById(clientId);
 
-
 		if (!products.length) {
 			throw new Error('The order is incomplete. You must select either a drink, accompaniment or snack');
 		}

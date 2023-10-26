@@ -5,35 +5,24 @@ import { IOrder } from '../../../../domain/entities/OrderEntity';
 import { Order, OrderStatus } from '../entities/Order';
 
 export class OrderRepository implements IOrderRepositoryPort {
-
 	private connection: typeof DbConnection;
 
 	constructor() {
 		this.connection = DbConnection;
 	}
 
-	private async getConnection(): Promise<Repository<Order>> {
-		if (!this.connection) {
-			throw new Error('A conexão não foi estabelecida.');
-		}
-
-		const con = await this.connection.getConnection();
-
-		if (!con) {
-			throw new Error('A conexão não foi obtida com sucesso.');
-		}
-
-		return con.getRepository(Order);
+	private getRepo(): Repository<Order> {
+		return this.connection.getConnection().getRepository(Order);
 	}
 
 	async list(): Promise<IOrder[]> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 
 		return connection.find({relations: ['products']});
 	}
 
 	async findById(id: string): Promise<IOrder | null> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		try {
 			const order = await connection.createQueryBuilder('find_by_id')
 				.where('id = :id', { id })
@@ -50,7 +39,7 @@ export class OrderRepository implements IOrderRepositoryPort {
 	}
 
 	async update(id: string, status: OrderStatus): Promise<any> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 
 		await connection.createQueryBuilder('update_order')
 			.update()
@@ -61,7 +50,7 @@ export class OrderRepository implements IOrderRepositoryPort {
 	}
 
 	async delete(id: string){
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		await connection.createQueryBuilder('delete_order')
 			.delete()
 			.from(Order)
@@ -70,7 +59,7 @@ export class OrderRepository implements IOrderRepositoryPort {
 		return Promise.resolve();
 	}
 	async create(params: CreateOrderParams): Promise<IOrder> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		const client = connection.create(params);
 
 		return connection.save(client);

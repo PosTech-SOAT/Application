@@ -5,36 +5,25 @@ import { CreateOrUpdateProductParams, IProductRepositoryPort } from '../../../..
 import { Product } from '../entities/Product';
 
 export class ProductRepository implements IProductRepositoryPort {
-
 	private connection: typeof DbConnection;
 
 	constructor() {
 		this.connection = DbConnection;
 	}
 
-	private async getConnection(): Promise<Repository<Product>> {
-		if (!this.connection) {
-			throw new Error('A conexão não foi estabelecida.');
-		}
-
-		const con = await this.connection.getConnection();
-
-		if (!con) {
-			throw new Error('A conexão não foi obtida com sucesso.');
-		}
-
-		return con.getRepository(Product);
+	private getRepo(): Repository<Product> {
+		return this.connection.getConnection().getRepository(Product);
 	}
 
 	async create(params: CreateOrUpdateProductParams): Promise<IProduct> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		const client = connection.create(params);
 
 		return connection.save(client);
 	}
 
 	async list(ids?: Array<string>): Promise<IProduct[]> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 
 		if(!ids) {
 			return connection.find({relations: ['category']});
@@ -44,7 +33,7 @@ export class ProductRepository implements IProductRepositoryPort {
 	}
 
 	async findById(id: string): Promise<IProduct | null> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		try {
 			const product = await connection.createQueryBuilder('product')
 				.innerJoinAndSelect('product.category', 'category')
@@ -62,7 +51,7 @@ export class ProductRepository implements IProductRepositoryPort {
 	}
 
 	async findByCategory(categoryId: string): Promise<IProduct[] | null> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		try {
 			const products = await connection
 				.createQueryBuilder('product')
@@ -81,7 +70,7 @@ export class ProductRepository implements IProductRepositoryPort {
 	}
 
 	async update(id: string, params: CreateOrUpdateProductParams): Promise<void> {
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		try {
 			await connection
 				.createQueryBuilder('find_by_category_Id')
@@ -97,7 +86,7 @@ export class ProductRepository implements IProductRepositoryPort {
 	}
 
 	async delete(id: string): Promise<void>{
-		const connection = await this.getConnection();
+		const connection = this.getRepo();
 		await connection.createQueryBuilder('delete_Product')
 			.delete()
 			.from(Product)

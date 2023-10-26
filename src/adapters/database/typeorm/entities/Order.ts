@@ -37,7 +37,7 @@ export class Order {
   	client: Client;
 
 	@ManyToMany(() => Product, { eager: true })
-	@JoinTable()
+	@JoinTable({name: 'Orders_Products'})
   	products: Product[];
 
   @CreateDateColumn()
