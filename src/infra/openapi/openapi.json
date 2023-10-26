@@ -209,7 +209,7 @@
         }
       }
     },
-    "/api/products/listByCategory/{id}": {
+    "/api/products/category/{id}": {
       "get": {
         "tags": ["Product"],
         "summary": "List products by category",
@@ -242,6 +242,35 @@
       }
     },
     "/api/products/{id}": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "Find product by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "product ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ListProductsByCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "patch": {
         "tags": ["Product"],
         "summary": "Edit an existing product",
@@ -253,7 +282,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Client cpf"
+            "description": "product ID"
           }
         ],
         "requestBody": {
@@ -430,7 +459,7 @@
           }
         }
       }
-    },
+    }
   },
   "components": {
     "schemas": {

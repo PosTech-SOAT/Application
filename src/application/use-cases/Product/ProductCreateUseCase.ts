@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { CreateProductParams, IProductRepositoryPort } from '../../ports/IProductRespositoryPort';
+import { CreateOrUpdateProductParams, IProductRepositoryPort } from '../../ports/IProductRespositoryPort';
 import { ICategoryRepositoryPort } from '../../ports/ICategoryRepositoryPort';
 import { IProduct } from '../../../domain/entities/ProductEntity';
 import { CreateProductExecuteParams } from '../../../dto/CreateProductParamsDto';
@@ -26,7 +26,7 @@ export default class ProductCreateUseCase {
 		const product = await this.productRepository.create({
 			...rest,
 			category,
-		} as CreateProductParams);
+		} as CreateOrUpdateProductParams);
 
 		return product;
 	}

@@ -1,7 +1,7 @@
 import { In, Repository } from 'typeorm';
 import { DbConnection } from '../../../../infra/database/PostgreSQLConnection';
 import { IProduct } from '../../../../domain/entities/ProductEntity';
-import { CreateProductParams, IProductRepositoryPort } from '../../../../application/ports/IProductRespositoryPort';
+import { CreateOrUpdateProductParams, IProductRepositoryPort } from '../../../../application/ports/IProductRespositoryPort';
 import { Product } from '../entities/Product';
 
 export class ProductRepository implements IProductRepositoryPort {
@@ -26,7 +26,7 @@ export class ProductRepository implements IProductRepositoryPort {
 		return con.getRepository(Product);
 	}
 
-	async create(params: CreateProductParams): Promise<IProduct> {
+	async create(params: CreateOrUpdateProductParams): Promise<IProduct> {
 		const connection = await this.getConnection();
 		const client = connection.create(params);
 
@@ -46,8 +46,9 @@ export class ProductRepository implements IProductRepositoryPort {
 	async findById(id: string): Promise<IProduct | null> {
 		const connection = await this.getConnection();
 		try {
-			const product = await connection.createQueryBuilder('find_by_id')
-				.where('id = :id', { id })
+			const product = await connection.createQueryBuilder('product')
+				.innerJoinAndSelect('product.category', 'category')
+				.where('product.id = :product_id', { product_id: id })
 				.getOne();
 
 			if (!product) {
@@ -64,12 +65,13 @@ export class ProductRepository implements IProductRepositoryPort {
 		const connection = await this.getConnection();
 		try {
 			const products = await connection
-				.createQueryBuilder('find_by_category_Id')
-				.where('categoryId = :categoryId', { categoryId })
+				.createQueryBuilder('product')
+				.innerJoinAndSelect('product.category', 'category')
+				.where('category.id = :categoryId', { categoryId })
 				.getMany();
 
 			if (!products) {
-				throw new Error('Products doesn\'t exists');
+				throw new Error('There is no product of this category');
 			}
 
 			return products;
@@ -78,7 +80,7 @@ export class ProductRepository implements IProductRepositoryPort {
 		}
 	}
 
-	async edit(id: string, params: CreateProductParams): Promise<void> {
+	async update(id: string, params: CreateOrUpdateProductParams): Promise<void> {
 		const connection = await this.getConnection();
 		try {
 			await connection
