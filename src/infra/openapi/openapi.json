@@ -653,8 +653,8 @@
         }
       },
       "PedidoStatus": {
-         "type": "string",
-          "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
+        "type": "string",
+        "enum": ["EM_PREPARACAO", "PRONTO", "RECEBIDO", "FINALIZADO"]
       }
     }
   }
