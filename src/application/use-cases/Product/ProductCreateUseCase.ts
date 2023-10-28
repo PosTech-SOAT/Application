@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { CreateOrUpdateProductParams, IProductRepositoryPort } from '../../ports/IProductRespositoryPort';
 import { ICategoryRepositoryPort } from '../../ports/ICategoryRepositoryPort';
 import { IProduct } from '../../../domain/entities/ProductEntity';
-import { CreateProductExecuteParams } from '../../../dto/CreateProductParamsDto';
+import { CreateProductExecuteParams } from '../../../domain/dto/CreateProductParamsDto';
 
 
 @injectable()

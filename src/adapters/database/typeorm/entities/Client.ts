@@ -17,7 +17,7 @@ export class Client {
   	cpf: string;
 
 	@OneToMany(() => Order, orders => orders.client)
-	 orders: string;
+	orders: Array<Order>;
 
   @CreateDateColumn()
   	createdAt: Date = new Date();

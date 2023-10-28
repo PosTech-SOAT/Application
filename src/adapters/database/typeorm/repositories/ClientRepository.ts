@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { IClient } from '../../../../domain/entities/ClientEntity';
-import { CreateClientParamsDto } from '../../../../dto/CreateClientParamsDto';
+import { CreateClientParamsDto } from '../../../../domain/dto/CreateClientParamsDto';
 import { Client } from '../entities/Client';
 import { DbConnection } from '../../../../infra/database/PostgreSQLConnection';
 import { IClientRepositoryPort } from '../../../../application/ports/IClientRepositoryPort';

@@ -3,6 +3,9 @@ import { CreateOrderExecuteParams, CreateOrderParams, IOrderRepositoryPort } fro
 import { IOrder } from '../../../domain/entities/OrderEntity';
 import { IClientRepositoryPort } from '../../ports/IClientRepositoryPort';
 import { IProductRepositoryPort } from '../../ports/IProductRespositoryPort';
+import { IProduct } from '../../../domain/entities/ProductEntity';
+import { IOrdersProducts } from '../../../domain/entities/OrdersProductsEntity';
+import { mapProductsToRealQuantity } from '../../../domain/mappers/MapProductsToRealQuantity';
 
 
 @injectable()
@@ -19,7 +22,7 @@ export default class OrderCreateUseCase {
 	async execute(params: CreateOrderExecuteParams): Promise<IOrder> {
 		const {clientId, productIds, ...rest} = params;
 
-		const products = await this.productRepository.list(productIds);
+		const products = mapProductsToRealQuantity(await this.productRepository.list(productIds), productIds);
 
 		const client = await this.clientRepository.findById(clientId);
 

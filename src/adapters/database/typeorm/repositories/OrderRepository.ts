@@ -3,6 +3,12 @@ import { DbConnection } from '../../../../infra/database/PostgreSQLConnection';
 import { CreateOrderParams, IOrderRepositoryPort } from '../../../../application/ports/IOrderRepositoryPort';
 import { IOrder } from '../../../../domain/entities/OrderEntity';
 import { Order, OrderStatus } from '../entities/Order';
+import { IOrdersProducts } from '../../../../domain/entities/OrdersProductsEntity';
+import { Client } from '../entities/Client';
+import { OrdersProducts } from '../entities/OrdersProducts';
+import { Product } from '../entities/Product';
+import { OrderDto } from '../../../../domain/dto/OrderDto';
+import { mapOrderToOrderDto } from '../../../../domain/mappers/MapOrderToOrderDto';
 
 export class OrderRepository implements IOrderRepositoryPort {
 	private connection: typeof DbConnection;
@@ -15,24 +21,26 @@ export class OrderRepository implements IOrderRepositoryPort {
 		return this.connection.getConnection().getRepository(Order);
 	}
 
-	async list(): Promise<IOrder[]> {
+	async list(): Promise<OrderDto[]> {
 		const connection = this.getRepo();
 
-		return connection.find({relations: ['products']});
+		return (await connection.find({relations: ['products']})).map(mapOrderToOrderDto);
 	}
 
-	async findById(id: string): Promise<IOrder | null> {
+	async findById(id: string): Promise<OrderDto | null> {
 		const connection = this.getRepo();
 		try {
-			const order = await connection.createQueryBuilder('find_by_id')
-				.where('id = :id', { id })
+			const order = await connection.createQueryBuilder('order')
+				.leftJoinAndSelect('order.products', 'products')
+				.leftJoinAndSelect('products.product', 'product')
+				.where('order.id = :id', { id })
 				.getOne();
 
 			if (!order) {
 				throw new Error('Order doesn\'t exists');
 			}
 
-			return order;
+			return mapOrderToOrderDto(order);
 		} catch (error) {
 			throw error;
 		}
@@ -58,10 +66,18 @@ export class OrderRepository implements IOrderRepositoryPort {
 			.execute();
 		return Promise.resolve();
 	}
-	async create(params: CreateOrderParams): Promise<IOrder> {
-		const connection = this.getRepo();
-		const client = connection.create(params);
 
-		return connection.save(client);
+	async create(params: CreateOrderParams): Promise<IOrder> {
+		const { products, client } = params;
+		const connection = this.getRepo();
+		const order = new Order();
+		order.client = client as Client;
+		order.products = products.map((product) => {
+			const data = new OrdersProducts();
+			data.product = product as Product;
+			return data;
+		}) as Array<OrdersProducts>
+				  
+		return connection.save(order);
 	}
 }

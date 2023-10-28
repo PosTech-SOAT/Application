@@ -3,16 +3,13 @@ import {
 	PrimaryGeneratedColumn,
 	CreateDateColumn,
 	UpdateDateColumn,
-	ManyToMany,
-	JoinTable,
 	ManyToOne,
 	Column,
 	OneToMany,
-	JoinColumn,
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 import { Client } from './Client';
-import { Product } from './Product';
+import { OrdersProducts } from './OrdersProducts';
 
 export enum OrderStatus {
   RECEBIDO = 'RECEBIDO',
@@ -24,21 +21,20 @@ export enum OrderStatus {
 @Entity('Orders')
 export class Order {
   @PrimaryGeneratedColumn('uuid')
-  	id: string;
+	id: string;
 
-  @Column({
-  	type: 'enum',
-  	enum: OrderStatus,
-  	default: OrderStatus.EM_PREPARACAO,
-  })
+	@Column({
+		type: 'enum',
+		enum: OrderStatus,
+		default: OrderStatus.RECEBIDO,
+	})
   	status: OrderStatus;
 
 	@ManyToOne(() => Client, client => client.orders)
   	client: Client;
 
-	@ManyToMany(() => Product, { eager: true })
-	@JoinTable({name: 'Orders_Products'})
-  	products: Product[];
+	@OneToMany(() => OrdersProducts, product => product.order, { eager: true, cascade: true })
+  	products: OrdersProducts[];
 
   @CreateDateColumn()
   	createdAt: Date = new Date();

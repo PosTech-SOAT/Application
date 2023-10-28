@@ -1,4 +1,4 @@
-import { IClient } from '../domain/entities/ClientEntity';
+import { IClient } from '../entities/ClientEntity';
 
 export interface CreateClientParamsDto extends Omit<IClient, 'id'> {
 	name: string,

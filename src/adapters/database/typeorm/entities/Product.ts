@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 import { Category } from './Category';
 import { Order } from './Order';
+import { OrdersProducts } from './OrdersProducts';
 
 @Entity('Products')
 export class Product {
@@ -18,7 +19,10 @@ export class Product {
 		price: number;
 
 	@ManyToOne(() => Category, category => category.products)
-	 category: Category;
+	 	category: Category;
+
+	@OneToMany(() => OrdersProducts, order => order.product)
+		orders: Array<Order>;
 
   @CreateDateColumn()
   	createdAt: Date = new Date();

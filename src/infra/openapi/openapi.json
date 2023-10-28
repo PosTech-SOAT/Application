@@ -589,7 +589,7 @@
       "CreateOrder": {
         "type": "object",
         "properties": {
-          "products": {
+          "productIds": {
             "type": "array",
             "items": {
               "type": "string",
