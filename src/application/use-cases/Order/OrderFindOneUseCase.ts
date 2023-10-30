@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IOrderRepositoryPort } from '../../ports/IOrderRepositoryPort';
-import { IOrder } from '../../../domain/entities/OrderEntity';
+import { OrderDto } from '../../../domain/dto/OrderDto';
 
 
 @injectable()
@@ -10,7 +10,7 @@ export default class OrderFindOneUseCase {
     private orderRepository: IOrderRepositoryPort
 	) {}
 
-	async execute(id: string): Promise<IOrder | null> {
+	async execute(id: string): Promise<OrderDto | null> {
 		return this.orderRepository.findById(id);
 	}
 }
