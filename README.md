@@ -47,16 +47,6 @@ Verificar se subiram os containeres **postech-3soat-app** e **database_postech**
 docker ps
 ```
 
-Rodar migrations:
-
-```sh
-yarn migration:run
-```
-**Importante 💡**
-> 
-> **_É necessário disponibilizar no environment os parâmetros de conexão do banco de dados. No ```diretório principal``` há um o arquivo .env.example que pode ser utilizado como .env para essa aplicação._**
-> 
-
 ## Documentação da API
 Acessar pelo navegador a url:
 
