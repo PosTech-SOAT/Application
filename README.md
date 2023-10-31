@@ -54,7 +54,7 @@ yarn migration:run
 ```
 **Importante 💡**
 > 
-> **_É necessário disponibilizar no environment os parâmetros de conexão do banco de dados. No ```src``` há um o arquivo .env.example que pode ser utilizado como .env para essa aplicação._**
+> **_É necessário disponibilizar no environment os parâmetros de conexão do banco de dados. No ```diretório principal``` há um o arquivo .env.example que pode ser utilizado como .env para essa aplicação._**
 > 
 
 ## Documentação da API
