@@ -175,6 +175,34 @@
     "/api/categories/{id}": {
       "get": {
         "tags": ["Category"],
+        "summary": "Get category by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category id",
+            "example": "489a467a-298b-44c4-9e21-7be441dda441"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Category"],
         "summary": "Edit category by id",
         "parameters": [
           {
