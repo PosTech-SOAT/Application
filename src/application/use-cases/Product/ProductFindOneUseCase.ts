@@ -11,6 +11,17 @@ export default class ProductFindOneUseCase {
 	) {}
 
 	async execute(id: string): Promise<IProduct | null> {
-		return this.productRepository.findById(id);
+		const product = await this.productRepository.findById(id);
+
+		return product ? {
+			id: product.id,
+			name: product.name,
+			description: product.description,
+			price: product.price,
+			category: {
+				id: product.category.id,
+				name: product.category.name,
+			},
+		} : null;
 	}
 }

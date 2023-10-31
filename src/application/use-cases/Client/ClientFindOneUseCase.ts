@@ -11,6 +11,18 @@ export default class ClientFindOneUseCase {
 
 	async execute(cpf: string): Promise<IClient | null> {
 		const client = await this.clientRepository.findByCPF(cpf);
-		return client;
+
+		if (!client) {
+			return null;
+		}
+
+		const clientData: IClient = {
+			id: client.id,
+			name: client.name,
+			cpf: client.cpf,
+			email: client.email,
+		};
+
+		return clientData;
 	}
 }

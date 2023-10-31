@@ -1,5 +1,5 @@
-import { IOrder } from "./OrderEntity"
-import { IProduct } from "./ProductEntity"
+import { IOrder } from './OrderEntity';
+import { IProduct } from './ProductEntity';
 
 export interface IOrdersProducts {
     id: number;

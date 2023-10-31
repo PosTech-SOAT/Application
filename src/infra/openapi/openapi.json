@@ -99,7 +99,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateEditCategory"
+                "$ref": "#/components/schemas/CreateCategory"
               }
             }
           }
@@ -135,10 +135,8 @@
     },
     "/api/categories/{id}": {
       "patch": {
-        "tags": [
-          "Category"
-        ],
-        "summary": "Edit an existing category",
+        "tags": ["Category"],
+        "summary": "Get category by id",
         "parameters": [
           {
             "name": "id",
@@ -151,19 +149,37 @@
             "example": "489a467a-298b-44c4-9e21-7be441dda441"
           }
         ],
-        "requestBody": {
-          "description": "Edit an existing category",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEditCategory"
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
               }
             }
           }
-        },
+        }
+      },
+      "delete": {
+        "tags": ["Category"],
+        "summary": "Delete a existing category",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category Id",
+            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
+          }
+        ],
         "responses": {
           "204": {
-            "description": "Product edited successfully"
+            "description": "Category deleted successfully"
           },
           "400": {
             "description": "Invalid request"
@@ -383,7 +399,7 @@
     "/api/orders/{id}": {
       "get": {
         "tags": ["Order"],
-        "summary": "List orders by id",
+        "summary": "List order by id",
         "parameters": [
           {
             "name": "id",
@@ -402,10 +418,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Order"
-                  }
+                  "$ref": "#/components/schemas/Order"
                 }
               }
             }
@@ -432,7 +445,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Order"
+                "$ref": "#/components/schemas/EditOrder"
               }
             }
           }
@@ -514,7 +527,7 @@
           }
         }
       },
-      "CreateEditCategory": {
+      "CreateCategory": {
         "type": "object",
         "properties": {
           "name": {
@@ -540,6 +553,23 @@
           }
         }
       },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Snack"
+          },
+          "description": {
+            "type": "string",
+            "example": "Combos or singles"
+          }
+        }
+      },
       "ListProductsByCategory": {
         "type": "object",
         "properties": {
@@ -559,9 +589,18 @@
             "type": "number",
             "example": 26.99
           },
-          "categoryName": {
-            "type": "string",
-            "example": "Snack"
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string",
+                "example": "Snack"
+              }
+            }
           }
         }
       },
@@ -602,6 +641,18 @@
           }
         }
       },
+      "EditOrder": {
+        "type": "object",
+        "properties": {
+          "productIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
       "Order": {
         "type": "object",
         "properties": {
@@ -613,80 +664,14 @@
             "type": "string",
             "example": "Cacau"
           },
-          "snack": {
+          "products": {
             "type": "array",
             "items": {
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Nbs Bacon Cheese"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
-                },
-                "price": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 26.99
-                }
-              }
-            }
-          },
-          "accompaniment": {
-            "type": "array",
-            "items": {
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Batata Rústica"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Batata rústica tamanho grande, com acompanhamento de um molho especial da casa a sua escolha"
-                },
-                "price": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 17
-                }
-              }
-            }
-          },
-          "drink": {
-            "type": "array",
-            "items": {
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Coca Cola"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Lata 350ml"
-                },
-                "price": {
-                  "type": "number",
-                  "format": "float",
-                  "example": 7
-                }
-              }
+              "$ref": "#/components/schemas/Products"
             }
           },
           "status": {
-            "$ref": "#/components/schemas/PedidoStatus"
+            "$ref": "#/components/schemas/OrderStatus"
           },
           "total": {
             "type": "number",
@@ -694,12 +679,48 @@
           }
         }
       },
-      "PedidoStatus": {
+      "Products": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Coca Cola"
+          },
+          "description": {
+            "type": "string",
+            "example": "Lata 350ml"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "example": 7
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string",
+                "example": "Snack"
+              }
+            }
+          }
+        }
+      },
+      "OrderStatus": {
         "type": "string",
         "enum": [
-          "EM_PREPARACAO",
-          "PRONTO",
+          "AGUARDANDO_PAGAMENTO",
           "RECEBIDO",
+          "EM_PREPARO",
+          "PRONTO",
           "FINALIZADO"
         ]
       }

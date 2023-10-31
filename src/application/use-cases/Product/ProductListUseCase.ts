@@ -21,7 +21,6 @@ export default class ProductListUseCase {
 				name: product.category.name,
 				description: product.category.description,
 			},
-			
 		}));
 	}
 }

@@ -12,8 +12,9 @@ import { Client } from './Client';
 import { OrdersProducts } from './OrdersProducts';
 
 export enum OrderStatus {
+	AGUARDANDO_PAGAMENTO = 'AGUARDANDO_PAGAMENTO',
   RECEBIDO = 'RECEBIDO',
-  EM_PREPARACAO = 'EM_PREPARACAO',
+  EM_PREPARACAO = 'EM_PREPARO',
   PRONTO = 'PRONTO',
   FINALIZADO = 'FINALIZADO',
 }
@@ -21,12 +22,12 @@ export enum OrderStatus {
 @Entity('Orders')
 export class Order {
   @PrimaryGeneratedColumn('uuid')
-	id: string;
+  	id: string;
 
 	@Column({
 		type: 'enum',
 		enum: OrderStatus,
-		default: OrderStatus.RECEBIDO,
+		default: OrderStatus.AGUARDANDO_PAGAMENTO,
 	})
   	status: OrderStatus;
 

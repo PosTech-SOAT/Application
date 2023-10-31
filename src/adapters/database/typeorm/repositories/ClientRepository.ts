@@ -36,9 +36,8 @@ export class ClientRepository implements IClientRepositoryPort{
 		const repo = this.getRepo();
 
 		const client = await repo.createQueryBuilder('find_by_id')
-						     .where('id = :id', { id })
-							 .getOne();
-
+			.where('id = :id', { id })
+			.getOne();
 
 		return client || null;
 	}
