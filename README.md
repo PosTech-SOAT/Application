@@ -2,17 +2,22 @@
 
 Projeto de um Sistema de Controle de pedidos em desenvolvimento durante a Pós-graduação em Arquitetura de Software da FIAP.
 
-## Tecnologias:
+## Tecnologias Utilizadas:
 
 - [NodeJs](https://nodejs.org/en/docs)
 - [Express](https://expressjs.com/pt-br/)
 - [TypeORM](https://typeorm.io/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Docker](https://docs.docker.com/?_gl=1*1xw1zkg*_ga*NzIyMTM4ODIxLjE2OTg2MTk0MTQ.*_ga_XJWPQMJYHQ*MTY5ODYxOTQxNC4xLjEuMTY5ODYxOTQxNC42MC4wLjA.)
+- [Docker](https://docs.docker.com/)
+
+## Dependencias:
+Para a execução do projeto, as seguintes dependências precisão ser satifeitas,
+- [Docker](https://docs.docker.com/get-docker/)
+- [NodeJS](https://nodejs.org/en), Versão: 16.x ou superior
 
 
 ## Instalação do Projeto:
-Fazer o clone e ir na pasta do projeto (por exemplo: tech-challenge-3soat-fiap):
+Fazer o clone e ir na pasta do projeto:
 
 ```sh
 git clone https://github.com/VitorDiToro/PosTech-3SOAT
