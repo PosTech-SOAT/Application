@@ -6,6 +6,7 @@ import OrderListUseCase from '../../application/use-cases/Order/OrderListUseCase
 import OrderCreateUseCase from '../../application/use-cases/Order/OrderCreateUseCase';
 import OrderUpdateStatusUseCase from '../../application/use-cases/Order/OrderUpdateStatusUseCase';
 import { OrderStatus } from '../database/typeorm/entities/Order';
+import OrderListByStatusUseCase from '../../application/use-cases/Order/OrderListByStatusUseCase';
 
 export default class OrderController {
 	async create(request: Request, response: Response) {
@@ -30,6 +31,17 @@ export default class OrderController {
 		}
 	}
 
+	async listByStatus(reques: Request, response: Response) {
+		const listOrderByStatusUseCase = container.resolve(OrderListByStatusUseCase);
+		try {
+			const orders = await listOrderByStatusUseCase.execute();
+
+			return response.status(200).json(orders);
+		} catch (error: any) {
+			return response.status(400).json({ message: error.message });
+		}
+	}
+
 	async findById(request: Request, response: Response) {
 
 		const findOneOrderUseCase = container.resolve(OrderFindOneUseCase);
@@ -46,7 +58,7 @@ export default class OrderController {
 
 		const findOneOrderUseCase = container.resolve(OrderUpdateStatusUseCase);
 		try {
-			await findOneOrderUseCase.execute(request.params.id, request.query.status as OrderStatus);
+			await findOneOrderUseCase.execute(request.params.id, request.body.status as OrderStatus);
 
 			return response.status(200).json({ message: 'Order updated successfully' });
 		} catch (error: any) {

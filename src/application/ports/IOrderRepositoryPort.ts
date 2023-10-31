@@ -19,6 +19,7 @@ export type CreateOrderParams = {
 export interface IOrderRepositoryPort {
 	list(): Promise<Array<OrderDto>>
 	findById(id: string): Promise<OrderDto | null>
+	listByStatus(): Promise<Array<IOrder>>
 	delete(id: string): Promise<any>
 	create(params: CreateOrderParams): Promise<IOrder>
 	update(id: string, status: OrderStatus): Promise<any>

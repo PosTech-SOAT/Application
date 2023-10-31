@@ -483,6 +483,27 @@
           }
         }
       }
+    },
+    "/api/orders/queue": {
+      "get": {
+        "tags": ["Order"],
+        "summary": "List orders grouped my status",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -673,7 +694,7 @@
           "status": {
             "$ref": "#/components/schemas/OrderStatus"
           },
-          "total": {
+          "price": {
             "type": "number",
             "example": 50.99
           }
