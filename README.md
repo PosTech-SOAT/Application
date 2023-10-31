@@ -16,7 +16,7 @@ Fazer o clone e ir na pasta do projeto (por exemplo: tech-challenge-3soat-fiap):
 
 ```sh
 git clone https://github.com/VitorDiToro/PosTech-3SOAT
-cd tech-challenge-3soat-fiap
+cd PosTech-3SOAT
 ```
 
 Subir os contâineres do Node e do PostgreSQL usando o arquivo docker-compose.yml:
