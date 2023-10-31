@@ -12,8 +12,8 @@ Projeto de um Sistema de Controle de pedidos em desenvolvimento durante a Pós-g
 
 ## Dependencias:
 Para a execução do projeto, as seguintes dependências precisão ser satifeitas,
-- [Docker](https://docs.docker.com/get-docker/)
-- [NodeJS](https://nodejs.org/en), Versão: 16.x ou superior
+- [Docker](https://docs.docker.com/get-docker/).
+- [NodeJS](https://nodejs.org/en), Versão: 16.x ou superior.
 
 
 ## Instalação do Projeto:
