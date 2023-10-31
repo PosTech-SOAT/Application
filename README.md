@@ -24,6 +24,17 @@ git clone https://github.com/VitorDiToro/PosTech-3SOAT
 cd PosTech-3SOAT
 ```
 
+Instalar as dependências do projeto:
+
+```sh
+yarn install
+```
+**Nota 💡**
+> 
+> **_Caso não possua o Yarn instalado na sua máquina, pode proceder com a instalação via Npm._**
+> 
+
+
 Subir os contâineres do Node e do PostgreSQL usando o arquivo docker-compose.yml:
 
 ```sh
@@ -41,6 +52,10 @@ Rodar migrations:
 ```sh
 yarn migration:run
 ```
+**Importante 💡**
+> 
+> **_É necessário disponibilizar no environment os parâmetros de conexão do banco de dados. No ```src``` há um o arquivo .env.example que pode ser utilizado como .env para essa aplicação._**
+> 
 
 ## Documentação da API
 Acessar pelo navegador a url:
