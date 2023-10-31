@@ -15,6 +15,7 @@ Projeto de um Sistema de Controle de pedidos em desenvolvimento durante a Pós-g
 Fazer o clone e ir na pasta do projeto (por exemplo: tech-challenge-3soat-fiap):
 
 ```sh
+git clone https://github.com/VitorDiToro/PosTech-3SOAT
 cd tech-challenge-3soat-fiap
 ```
 
