@@ -87,6 +87,45 @@
             }
           }
         }
+      },
+      "patch": {
+        "tags": ["Client"],
+        "summary": "Edit client by cpf",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "client CPF",
+            "example": "23487654398"
+          }
+        ],
+        "requestBody": {
+          "description": "Pass client attributes to edit",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/categories": {
@@ -136,7 +175,7 @@
     "/api/categories/{id}": {
       "get": {
         "tags": ["Category"],
-        "summary": "Get category by id",
+        "summary": "Edit category by id",
         "parameters": [
           {
             "name": "id",
@@ -149,6 +188,17 @@
             "example": "489a467a-298b-44c4-9e21-7be441dda441"
           }
         ],
+        "requestBody": {
+          "description": "Set params to edit the category",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Categories"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",

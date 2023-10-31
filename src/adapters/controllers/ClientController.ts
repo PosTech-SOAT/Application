@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import ClientCreateUseCase from '../../application/use-cases/Client/ClientCreateUseCase';
 import ClientListUseCase from '../../application/use-cases/Client/ClientListUseCase';
 import ClientFindOneUseCase from '../../application/use-cases/Client/ClientFindOneUseCase';
+import ClientUpdateUseCase from '../../application/use-cases/Client/ClientUpdateUseCase';
 
 export default class ClientController {
 
@@ -43,6 +44,18 @@ export default class ClientController {
 			const client = await clientListUseCase.execute(request.params.cpf);
 
 			return response.status(200).json(client);
+		} catch (error: any) {
+			return response.status(400).json({ message: error.message });
+		}
+	}
+
+	async update(request: Request, response: Response) {
+		const clientListUseCase = container.resolve(ClientUpdateUseCase);
+
+		try {
+			const client = await clientListUseCase.execute(request.params.cpf, request.body);
+
+			return response.status(200).json({ message: 'Client updated successfully' });
 		} catch (error: any) {
 			return response.status(400).json({ message: error.message });
 		}

@@ -7,6 +7,7 @@ const clientController = new ClientController();
 
 clientRoutes.post('/', clientController.create);
 clientRoutes.get('/', clientController.list);
+clientRoutes.patch('/:cpf', clientController.update);
 clientRoutes.get('/:cpf', clientController.findByCpf);
 
 export default clientRoutes;

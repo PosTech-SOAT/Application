@@ -11,4 +11,5 @@ export interface IClientRepositoryPort {
 	findById(id: string): Promise<IClient | null>;
   findByCPF(cpf: string): Promise<IClient | null>;
   list(): Promise<IClient[]>;
+  update(cpf: string, params: CreateClientParams): Promise<any>;
 }

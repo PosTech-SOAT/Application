@@ -3,7 +3,7 @@ import { IClient } from '../../../../domain/entities/ClientEntity';
 import { CreateClientParamsDto } from '../../../../domain/dto/CreateClientParamsDto';
 import { Client } from '../entities/Client';
 import { DbConnection } from '../../../../infra/database/PostgreSQLConnection';
-import { IClientRepositoryPort } from '../../../../application/ports/IClientRepositoryPort';
+import { CreateClientParams, IClientRepositoryPort } from '../../../../application/ports/IClientRepositoryPort';
 
 export class ClientRepository implements IClientRepositoryPort{
 	private connection: typeof DbConnection;
@@ -48,6 +48,17 @@ export class ClientRepository implements IClientRepositoryPort{
 		const clients = await repo.find();
 
 		return clients;
+	}
+
+	async update(cpf: string, data: CreateClientParams): Promise<any> {
+		const connection = this.getRepo();
+
+		await connection.createQueryBuilder('client')
+			.update()
+			.where('cpf = :cpf', { cpf })
+			.set({ ...data })
+			.execute();
+		return Promise.resolve();
 	}
 
 }

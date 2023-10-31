@@ -8,6 +8,7 @@ const categoryController = new CategoryController();
 categoryRoutes.post('/', categoryController.create);
 categoryRoutes.get('/', categoryController.list);
 categoryRoutes.get('/:id', categoryController.findById);
+categoryRoutes.patch('/:id', categoryController.update);
 categoryRoutes.delete('/:id', categoryController.delete);
 
 export default categoryRoutes;

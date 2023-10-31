@@ -4,6 +4,7 @@ import CategoryCreateUseCase from '../../application/use-cases/Category/Category
 import CategoryListUseCase from '../../application/use-cases/Category/CategoryListUseCase';
 import CategoryFindOneUseCase from '../../application/use-cases/Category/CategoryFindOneUseCase';
 import CategoryDeleteUseCase from '../../application/use-cases/Category/CategoryDeleteUseCase';
+import CategoryUpdateUseCase from '../../application/use-cases/Category/CategoryUpdateUseCase';
 
 export default class CategoryController {
 	async create(request: Request, response: Response) {
@@ -50,6 +51,18 @@ export default class CategoryController {
 			await deleteCategoryUseCase.execute(request.params.id);
 
 			return response.status(204).json({ message: 'Category deleted successfully' });
+		} catch (error: any) {
+			return response.status(400).json({ message: error.message });
+		}
+	}
+
+	async update(request: Request, response: Response) {
+
+		const deleteCategoryUseCase = container.resolve(CategoryUpdateUseCase);
+		try {
+			await deleteCategoryUseCase.execute(request.params.id, request.body);
+
+			return response.status(200).json({ message: 'Category updated successfully' });
 		} catch (error: any) {
 			return response.status(400).json({ message: error.message });
 		}

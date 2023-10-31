@@ -44,4 +44,15 @@ export class CategoryRepository implements ICategoryRepositoryPort {
 
 		return connection.save(category);
 	}
+
+	async update(id: string, data: CreateCategoryParams): Promise<any> {
+		const connection = this.getRepo();
+
+		await connection.createQueryBuilder('category')
+			.update()
+			.where('id = :id', { id })
+			.set({ ...data })
+			.execute();
+		return Promise.resolve();
+	}
 }
