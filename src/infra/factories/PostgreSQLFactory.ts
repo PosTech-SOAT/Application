@@ -7,7 +7,7 @@ import { Order } from '../../adapters/database/typeorm/entities/Order';
 import { Product } from '../../adapters/database/typeorm/entities/Product';
 import { OrdersProducts } from '../../adapters/database/typeorm/entities/OrdersProducts';
 
-const port = parseInt(process.env.DB_PORT || '5432');
+const port = parseInt(String(process.env.DB_PORT));
 
 export class PostgreSQLFactory {
 	private data: DataSource;
@@ -15,11 +15,11 @@ export class PostgreSQLFactory {
 	constructor() {
 		this.data = new DataSource({
 			type: 'postgres',
-			host: process.env.DB_HOST || 'database',
+			host: process.env.DB_HOST,
 			port: port,
-			username: process.env.DB_USER || 'root',
-			password: process.env.DB_PASS || 'root',
-			database: process.env.DB_NAME || 'postech',
+			username: process.env.DB_USER,
+			password: process.env.DB_PASS,
+			database: process.env.DB_NAME,
 			entities: [Client, Category, Order, Product, OrdersProducts],
 			migrations: ['./src/infra/typeorm/migrations/*.ts'],
 			migrationsTableName: 'Migrations',
