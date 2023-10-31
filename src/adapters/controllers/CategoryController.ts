@@ -33,7 +33,6 @@ export default class CategoryController {
 	}
 
 	async findById(request: Request, response: Response) {
-
 		const findOneCategoryUseCase = container.resolve(CategoryFindOneUseCase);
 		try {
 			const category = await findOneCategoryUseCase.execute(request.params.id);
