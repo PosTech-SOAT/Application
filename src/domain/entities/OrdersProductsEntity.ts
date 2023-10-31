@@ -2,7 +2,7 @@ import { IOrder } from './OrderEntity';
 import { IProduct } from './ProductEntity';
 
 export interface IOrdersProducts {
-    id: number;
+    id: string;
     order: IOrder;
     product: IProduct;
 }

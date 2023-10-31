@@ -24,13 +24,26 @@ export class OrderRepository implements IOrderRepositoryPort {
 	async list(): Promise<OrderDto[]> {
 		const connection = this.getRepo();
 
-		return (await connection.find({relations: ['products']})).map(mapOrderToOrderDto);
+		const orders = (await connection.find({relations: ['products', 'client']})).map(mapOrderToOrderDto);
+		return orders
+	}
+
+	async listByStatus(): Promise<IOrder[]> {
+		const connection = this.getRepo();
+
+		return (await connection.createQueryBuilder('order')
+				.leftJoinAndSelect('order.client', 'client')
+				.leftJoinAndSelect('order.products', 'products')
+				.leftJoinAndSelect('products.product', 'product')
+				.getMany());
+
 	}
 
 	async findById(id: string): Promise<OrderDto | null> {
 		const connection = this.getRepo();
 		try {
 			const order = await connection.createQueryBuilder('order')
+				.leftJoinAndSelect('order.client', 'client')
 				.leftJoinAndSelect('order.products', 'products')
 				.leftJoinAndSelect('products.product', 'product')
 				.where('order.id = :id', { id })
