@@ -19,6 +19,12 @@ services:
     ports:
       - 3000:3000
       - 9229:9229
+    environment:
+      - DB_HOST=database_postech
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=postech
     volumes:
       - .:/usr/app
     links:

@@ -134,7 +134,7 @@
       }
     },
     "/api/categories/{id}": {
-      "patch": {
+      "get": {
         "tags": ["Category"],
         "summary": "Get category by id",
         "parameters": [
@@ -494,10 +494,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Order"
-                  }
+                  "$ref": "#/components/schemas/OrderQueue"
+
                 }
               }
             }
@@ -697,6 +695,95 @@
           "price": {
             "type": "number",
             "example": 50.99
+          }
+        }
+      },
+			"OrderQueue": {
+        "type": "object",
+        "properties": {
+          "AGUARDANDO_PAGAMENTO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"RECEBIDO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"EM_PREPARO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"PRONTO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"FINALIZADO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					}
+        }
+      },
+			"OrderQueueSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "example": "AGUARDANDO_PAGAMENTO"
+          },
+          "client": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string",
+                "example": "Cacau"
+              }
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Nbs Bacon Cheese"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho."
+                },
+                "price": {
+                  "type": "number",
+                  "example": "26.99"
+                }
+              }
+            }
+          },
+          "price": {
+            "type": "number",
+            "example": "26.99"
           }
         }
       },
