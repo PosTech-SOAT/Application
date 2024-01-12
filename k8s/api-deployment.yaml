@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: santanarael/api-fiap:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PG_HOST
+          value: postgres-service
+        - name: PG_PORT
+          value: "5432"
+        - name: PG_USER
+          value: root
+        - name: PG_PASSWORD
+          value: "root"
+        - name: PG_DB
+          value: postech
+        resources:   
+          requests:
+            memory: "64Mi"   # Memória inicial / MI = milicores (1 core = 1000 milicores)
+            cpu: "50m"       # CPU inicial 
+          limits:
+            memory: "128Mi"  # Limite máximo de memória
+            cpu: "500m"      # Limite máximo de CPU  / M = megabytes
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api
+  ports:
+    - protocol: TCP
+      port: 30303
+      targetPort: 3000
+  type: NodePort 
+  
