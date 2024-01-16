@@ -9,6 +9,9 @@ spec:
     name: postgres-deployment
   minReplicas: 1
   maxReplicas: 5
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
   metrics:
   - type: Resource
     resource:
