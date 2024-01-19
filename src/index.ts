@@ -3,9 +3,9 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 import swaggerFile from './infra/openapi/openapi.json';
-import router from './infra/http';
 
 import './adapters/controllers/container';
+import router from './presentation';
 
 const app = express();
 app.use(express.json());
