@@ -1,7 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { IOrder } from '../../../domain/entities/OrderEntity';
-import { IProductRepository } from '../../ports/IProductRespositoryPort';
-
+import { IProductRepository } from '../../interfaces/repositories/IProductRespository';
 
 @injectable()
 export default class ProductDeleteUseCase {

@@ -1,9 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { IOrder } from '../../../domain/entities/OrderEntity';
-import { OrderStatus } from '../../../adapters/database/typeorm/entities/Order';
-import { CreateOrUpdateProductParams, IProductRepository, UpdateProductParams } from '../../ports/IProductRespositoryPort';
-import { ICategoryRepository } from '../../ports/ICategoryRepository';
-
+import { CreateOrUpdateProductParams, IProductRepository, UpdateProductParams } from '../../interfaces/repositories/IProductRespository';
+import { ICategoryRepository } from '../../interfaces/repositories/ICategoryRepository';
 
 @injectable()
 export default class ProductUpdateUseCase {
@@ -15,15 +12,15 @@ export default class ProductUpdateUseCase {
 	) {}
 
 	async execute(id: string, body: Partial<UpdateProductParams> ): Promise<void> {
-		const { categoryId, ...rest } = body
-		const data: Partial<CreateOrUpdateProductParams> = {... rest}
+		const { categoryId, ...rest } = body;
+		const data: Partial<CreateOrUpdateProductParams> = {... rest};
 		if (categoryId) {
-			const category = await this.categoryRepository.findById(categoryId)
+			const category = await this.categoryRepository.findById(categoryId);
 			if (category) {
-				data['category'] = category
+				data['category'] = category;
 			}
 			else {
-				throw new Error("The informed categoryID doesn't exist")
+				throw new Error('The informed categoryID doesn\'t exist');
 			}
 		}
 		return this.productRepository.update(id, data);

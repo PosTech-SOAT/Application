@@ -1,7 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { IProductRepository } from '../../ports/IProductRespositoryPort';
-import { IProduct } from '../../../domain/entities/ProductEntity';
-
+import { IProductRepository } from '../../interfaces/repositories/IProductRespository';
+import { IProduct } from '../../../infra/entities/ProductEntity';
 
 @injectable()
 export default class ProductListUseCase {
