@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 import { IClientRepository } from '../../interfaces/repositories/IClientRepository';
 import { IClient } from '../../../infra/entities/ClientEntity';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class ClientListUseCase {
+export default class ClientListUseCase implements IBaseUseCase<void, IClient[]>{
 	constructor(
     @inject('ClientRepository')
     private clientRepository: IClientRepository

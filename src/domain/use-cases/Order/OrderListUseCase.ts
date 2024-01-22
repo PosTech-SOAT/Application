@@ -3,9 +3,10 @@ import { IOrderRepository } from '../../interfaces/repositories/IOrderRepository
 import { OrderDto } from '../../../infra/dto/OrderDto';
 import { IProduct } from '../../../infra/entities/ProductEntity';
 import { IClient } from '../../../infra/entities/ClientEntity';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class OrderListUseCase {
+export default class OrderListUseCase implements IBaseUseCase<void, Array<OrderDto>>{
 	constructor(
     @inject('OrderRepository')
     private orderRepository: IOrderRepository

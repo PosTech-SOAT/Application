@@ -2,9 +2,10 @@ import { inject, injectable } from 'tsyringe';
 import { IOrderRepository } from '../../interfaces/repositories/IOrderRepository';
 import { GroupedOrdersByStatus } from '../../../infra/dto/OrderDto';
 import { mapOrderToOrderDto } from '../../../infra/mappers/MapOrderToOrderDto';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class OrderListByStatusUseCase {
+export default class OrderListByStatusUseCase implements IBaseUseCase<void, GroupedOrdersByStatus> {
 	constructor(
     @inject('OrderRepository')
     private orderRepository: IOrderRepository

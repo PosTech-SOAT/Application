@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
 import { IProductRepository } from '../../interfaces/repositories/IProductRespository';
 import { IProduct } from '../../../infra/entities/ProductEntity';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class ProductListByCategoryUseCase {
+export default class ProductListByCategoryUseCase implements IBaseUseCase<string, IProduct[] | null> {
 	constructor(
     @inject('ProductRepository')
     private productRepository: IProductRepository

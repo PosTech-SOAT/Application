@@ -3,9 +3,10 @@ import { CreateOrUpdateProductParams, IProductRepository } from '../../interface
 import { ICategoryRepository } from '../../interfaces/repositories/ICategoryRepository';
 import { CreateProductExecuteParams } from '../../../infra/dto/CreateProductParamsDto';
 import { IProduct } from '../../../infra/entities/ProductEntity';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class ProductCreateUseCase {
+export default class ProductCreateUseCase implements IBaseUseCase<CreateProductExecuteParams, IProduct> {
 	constructor(
     @inject('ProductRepository')
     private productRepository: IProductRepository,

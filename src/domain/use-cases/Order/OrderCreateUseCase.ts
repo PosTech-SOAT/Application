@@ -4,9 +4,10 @@ import { IClientRepository } from '../../interfaces/repositories/IClientReposito
 import { IProductRepository } from '../../interfaces/repositories/IProductRespository';
 import { IOrder } from '../../../infra/entities/OrderEntity';
 import { mapProductsToRealQuantity } from '../../../infra/mappers/MapProductsToRealQuantity';
+import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class OrderCreateUseCase {
+export default class OrderCreateUseCase implements IBaseUseCase<CreateOrderExecuteParams, IOrder> {
 	constructor(
     @inject('OrderRepository')
     private orderRepository: IOrderRepository,
