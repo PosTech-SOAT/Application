@@ -53,8 +53,7 @@ export default class ClientController {
 		const clientListUseCase = container.resolve(ClientUpdateUseCase);
 
 		try {
-			const client = await clientListUseCase.execute(request.params.cpf, request.body);
-
+			await clientListUseCase.execute({id: request.params.cpf, params: request.body});
 			return response.status(200).json({ message: 'Client updated successfully' });
 		} catch (error: any) {
 			return response.status(400).json({ message: error.message });

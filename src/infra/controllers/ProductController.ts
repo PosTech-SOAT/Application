@@ -62,7 +62,7 @@ export default class ProductController {
 
 		const productUpdateUseCase = container.resolve(ProductUpdateUseCase);
 		try {
-			await productUpdateUseCase.execute(request.params.id, request.body as Partial<UpdateProductParams> );
+			await productUpdateUseCase.execute({id: request.params.id, body: request.body as Partial<UpdateProductParams> });
 
 			return response.status(200).json({ message: 'Product updated successfully' });
 		} catch (error: any) {

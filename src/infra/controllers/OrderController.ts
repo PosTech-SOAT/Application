@@ -58,7 +58,7 @@ export default class OrderController {
 
 		const findOneOrderUseCase = container.resolve(OrderUpdateStatusUseCase);
 		try {
-			await findOneOrderUseCase.execute(request.params.id, request.body.status as OrderStatus);
+			await findOneOrderUseCase.execute({id: request.params.id, status: request.body.status});
 
 			return response.status(200).json({ message: 'Order updated successfully' });
 		} catch (error: any) {

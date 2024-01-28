@@ -58,9 +58,9 @@ export default class CategoryController {
 
 	async update(request: Request, response: Response) {
 
-		const deleteCategoryUseCase = container.resolve(CategoryUpdateUseCase);
+		const updateCategoryUseCase = container.resolve(CategoryUpdateUseCase);
 		try {
-			await deleteCategoryUseCase.execute(request.params.id, request.body);
+			await updateCategoryUseCase.execute({id: request.params.id, params: request.body});
 
 			return response.status(200).json({ message: 'Category updated successfully' });
 		} catch (error: any) {
