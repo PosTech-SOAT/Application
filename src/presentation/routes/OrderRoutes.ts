@@ -5,11 +5,18 @@ const orderRoutes = Router();
 
 const orderController = new OrderController();
 
-orderRoutes.post('/', orderController.create);
+orderRoutes.post('/', (req, res) =>
+	orderController.create(req, res, orderController),
+);
 orderRoutes.get('/', orderController.list);
+orderRoutes.get('/callback', (req, res) =>
+	orderController.paymentWebhook(req, res, orderController),
+);
 orderRoutes.get('/queue', orderController.listByStatus);
 orderRoutes.get('/:id', orderController.findById);
-orderRoutes.patch('/:id', orderController.changeOrderStatus);
+orderRoutes.patch('/:id', (req, res) =>
+	orderController.changeOrderStatus(req, res, orderController),
+);
 orderRoutes.delete('/:id', orderController.delete);
 
 export default orderRoutes;

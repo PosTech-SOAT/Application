@@ -1,785 +1,784 @@
 {
-  "openapi": "3.0.0",
-  "info": {
-    "title": "PosTech-3SOAT",
-    "version": "1.0.0",
-    "description": "Tech Challenge."
-  },
-  "servers": [
-    {
-      "url": "http://localhost:3000",
-      "description": "Local server"
-    }
-  ],
-  "paths": {
-    "/api/clients": {
-      "post": {
-        "tags": [
-          "Client"
-        ],
-        "summary": "Create a new client",
-        "requestBody": {
-          "description": "New client details",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateClient"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Client created successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Client"],
-        "summary": "List all clients",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Client"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/clients/{cpf}": {
-      "get": {
-        "tags": ["Client"],
-        "summary": "Get client by cpf",
-        "description": "Get client by cpf",
-        "parameters": [
-          {
-            "name": "cpf",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Client cpf",
-            "example": "23498765400"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Client"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Client"],
-        "summary": "Edit client by cpf",
-        "parameters": [
-          {
-            "name": "cpf",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "client CPF",
-            "example": "23487654398"
-          }
-        ],
-        "requestBody": {
-          "description": "Pass client attributes to edit",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Client"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Category"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/categories": {
-      "post": {
-        "tags": ["Category"],
-        "summary": "Create a new category",
-        "requestBody": {
-          "description": "New category details",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateCategory"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Category created successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Category"],
-        "summary": "List all categories",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Categories"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/categories/{id}": {
-      "get": {
-        "tags": ["Category"],
-        "summary": "Get category by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Category id",
-            "example": "489a467a-298b-44c4-9e21-7be441dda441"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Category"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Category"],
-        "summary": "Edit category by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Category id",
-            "example": "489a467a-298b-44c4-9e21-7be441dda441"
-          }
-        ],
-        "requestBody": {
-          "description": "Set params to edit the category",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Categories"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Category"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Category"],
-        "summary": "Delete a existing category",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Category Id",
-            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Category deleted successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      }
-    },
-    "/api/products": {
-      "post": {
-        "tags": ["Product"],
-        "summary": "Create a new product",
-        "requestBody": {
-          "description": "New product details",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEditProduct"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Product created successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Product"],
-        "summary": "List all products",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ListProductsByCategory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/products/category/{id}": {
-      "get": {
-        "tags": ["Product"],
-        "summary": "List products by category",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Category id",
-            "example": "489a467a-298b-44c4-9e21-7be441dda441"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ListProductsByCategory"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/products/{id}": {
-      "get": {
-        "tags": ["Product"],
-        "summary": "Find product by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Product Id",
-            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ListProductsByCategory"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Product"],
-        "summary": "Edit an existing product",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Product Id",
-            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
-          }
-        ],
-        "requestBody": {
-          "description": "Edit an existing product",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateEditProduct"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Product edited successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Product"],
-        "summary": "Delete a existing product",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Product Id",
-            "example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Product deleted successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      }
-    },
-    "/api/orders": {
-      "post": {
-        "tags": ["Order"],
-        "summary": "Create a new order",
-        "requestBody": {
-          "description": "New order details",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Order created successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "get": {
-        "tags": ["Order"],
-        "summary": "List orders",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Order"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/orders/{id}": {
-      "get": {
-        "tags": ["Order"],
-        "summary": "List order by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Order Id",
-            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Order"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Order"],
-        "summary": "Edit an existing product",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Order Id",
-            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
-          }
-        ],
-        "requestBody": {
-          "description": "Edit an existing order",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EditOrder"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Product edited successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Order"],
-        "summary": "Delete a existing order",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Order Id",
-            "example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Order deleted successfully"
-          },
-          "400": {
-            "description": "Invalid request"
-          }
-        }
-      }
-    },
-    "/api/orders/queue": {
-      "get": {
-        "tags": ["Order"],
-        "summary": "List orders grouped my status",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OrderQueue"
+	"openapi": "3.0.0",
+	"info": {
+		"title": "PosTech-3SOAT",
+		"version": "1.0.0",
+		"description": "Tech Challenge."
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3000",
+			"description": "Local server"
+		}
+	],
+	"paths": {
+		"/api/clients": {
+			"post": {
+				"tags": ["Client"],
+				"summary": "Create a new client",
+				"requestBody": {
+					"description": "New client details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateClient"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Client created successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Client"],
+				"summary": "List all clients",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Client"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/clients/{cpf}": {
+			"get": {
+				"tags": ["Client"],
+				"summary": "Get client by cpf",
+				"description": "Get client by cpf",
+				"parameters": [
+					{
+						"name": "cpf",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Client cpf",
+						"example": "23498765400"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Client"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Client"],
+				"summary": "Edit client by cpf",
+				"parameters": [
+					{
+						"name": "cpf",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "client CPF",
+						"example": "23487654398"
+					}
+				],
+				"requestBody": {
+					"description": "Pass client attributes to edit",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Client"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Category"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/categories": {
+			"post": {
+				"tags": ["Category"],
+				"summary": "Create a new category",
+				"requestBody": {
+					"description": "New category details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCategory"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Category created successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Category"],
+				"summary": "List all categories",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Categories"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/categories/{id}": {
+			"get": {
+				"tags": ["Category"],
+				"summary": "Get category by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Category id",
+						"example": "489a467a-298b-44c4-9e21-7be441dda441"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Category"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Category"],
+				"summary": "Edit category by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Category id",
+						"example": "489a467a-298b-44c4-9e21-7be441dda441"
+					}
+				],
+				"requestBody": {
+					"description": "Set params to edit the category",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Categories"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Category"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Category"],
+				"summary": "Delete a existing category",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Category Id",
+						"example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Category deleted successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			}
+		},
+		"/api/products": {
+			"post": {
+				"tags": ["Product"],
+				"summary": "Create a new product",
+				"requestBody": {
+					"description": "New product details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateEditProduct"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Product created successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Product"],
+				"summary": "List all products",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ListProductsByCategory"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/products/category/{id}": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "List products by category",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Category id",
+						"example": "489a467a-298b-44c4-9e21-7be441dda441"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ListProductsByCategory"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/products/{id}": {
+			"get": {
+				"tags": ["Product"],
+				"summary": "Find product by ID",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Product Id",
+						"example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ListProductsByCategory"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Product"],
+				"summary": "Edit an existing product",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Product Id",
+						"example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
+					}
+				],
+				"requestBody": {
+					"description": "Edit an existing product",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateEditProduct"
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "Product edited successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Product"],
+				"summary": "Delete a existing product",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Product Id",
+						"example": "04fc3d75-b975-420e-b5f9-c23cc4c55786"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Product deleted successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			}
+		},
+		"/api/orders": {
+			"post": {
+				"tags": ["Order"],
+				"summary": "Create a new order",
+				"requestBody": {
+					"description": "New order details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateOrder"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Order created successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"get": {
+				"tags": ["Order"],
+				"summary": "List orders",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Order"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/orders/{id}": {
+			"get": {
+				"tags": ["Order"],
+				"summary": "List order by id",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Order Id",
+						"example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Order"
+								}
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Order"],
+				"summary": "Edit an existing product",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Order Id",
+						"example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
+					},
+					{
+						"name": "status",
+						"in": "query",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"$ref": "#/components/schemas/OrderStatus"
+						},
+						"description": "status",
+						"example": "RECEBIDO"
+					}
+				],
 
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "CreateClient": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Cacau"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "dedyannacacau@gmail.com"
-          },
-          "cpf": {
-            "type": "string",
-            "example": "23487654398"
-          }
-        }
-      },
-      "Client": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Cacau"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "dedyannacacau@gmail.com"
-          },
-          "cpf": {
-            "type": "string",
-            "example": "23487654398"
-          }
-        }
-      },
-      "CreateCategory": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Snack"
-          },
-          "description": {
-            "type": "string",
-            "example": "Combos or singles"
-          }
-        }
-      },
-      "Categories": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Snack"
-          }
-        }
-      },
-      "Category": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Snack"
-          },
-          "description": {
-            "type": "string",
-            "example": "Combos or singles"
-          }
-        }
-      },
-      "ListProductsByCategory": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Nbs Bacon Cheese"
-          },
-          "description": {
-            "type": "string",
-            "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
-          },
-          "price": {
-            "type": "number",
-            "example": 26.99
-          },
-          "category": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "name": {
-                "type": "string",
-                "example": "Snack"
-              }
-            }
-          }
-        }
-      },
-      "CreateEditProduct": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "Nbs Bacon Cheese"
-          },
-          "description": {
-            "type": "string",
-            "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
-          },
-          "price": {
-            "type": "number",
-            "example": 26.99
-          },
-          "categoryId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "CreateOrder": {
-        "type": "object",
-        "properties": {
-          "productIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          "clientId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "EditOrder": {
-        "type": "object",
-        "properties": {
-          "productIds": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        }
-      },
-      "Order": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "client": {
-            "type": "string",
-            "example": "Cacau"
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Products"
-            }
-          },
-          "status": {
-            "$ref": "#/components/schemas/OrderStatus"
-          },
-          "price": {
-            "type": "number",
-            "example": 50.99
-          }
-        }
-      },
+				"responses": {
+					"204": {
+						"description": "Order edited successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Order"],
+				"summary": "Delete a existing order",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"description": "Order Id",
+						"example": "f2fe212c-27a2-4409-8543-60f0f506db3f"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "Order deleted successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			}
+		},
+		"/api/orders/queue": {
+			"get": {
+				"tags": ["Order"],
+				"summary": "List orders grouped my status",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OrderQueue"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"CreateClient": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Cacau"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "dedyannacacau@gmail.com"
+					},
+					"cpf": {
+						"type": "string",
+						"example": "23487654398"
+					}
+				}
+			},
+			"Client": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Cacau"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "dedyannacacau@gmail.com"
+					},
+					"cpf": {
+						"type": "string",
+						"example": "23487654398"
+					}
+				}
+			},
+			"CreateCategory": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Snack"
+					},
+					"description": {
+						"type": "string",
+						"example": "Combos or singles"
+					}
+				}
+			},
+			"Categories": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Snack"
+					}
+				}
+			},
+			"Category": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Snack"
+					},
+					"description": {
+						"type": "string",
+						"example": "Combos or singles"
+					}
+				}
+			},
+			"ListProductsByCategory": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Nbs Bacon Cheese"
+					},
+					"description": {
+						"type": "string",
+						"example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
+					},
+					"price": {
+						"type": "number",
+						"example": 26.99
+					},
+					"category": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string",
+								"example": "Snack"
+							}
+						}
+					}
+				}
+			},
+			"CreateEditProduct": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Nbs Bacon Cheese"
+					},
+					"description": {
+						"type": "string",
+						"example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho"
+					},
+					"price": {
+						"type": "number",
+						"example": 26.99
+					},
+					"categoryId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"CreateOrder": {
+				"type": "object",
+				"properties": {
+					"productIds": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"format": "uuid"
+						}
+					},
+					"clientId": {
+						"type": "string",
+						"format": "uuid"
+					}
+				}
+			},
+			"EditOrder": {
+				"type": "object",
+				"properties": {
+					"productIds": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				}
+			},
+			"Order": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"client": {
+						"type": "string",
+						"example": "Cacau"
+					},
+					"products": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Products"
+						}
+					},
+					"status": {
+						"$ref": "#/components/schemas/OrderStatus"
+					},
+					"price": {
+						"type": "number",
+						"example": 50.99
+					}
+				}
+			},
 			"OrderQueue": {
-        "type": "object",
-        "properties": {
-          "AGUARDANDO_PAGAMENTO": {
+				"type": "object",
+				"properties": {
+					"AGUARDANDO_PAGAMENTO": {
 						"type": "array",
 						"items": {
 							"$ref": "#/components/schemas/OrderQueueSchema"
@@ -809,107 +808,107 @@
 							"$ref": "#/components/schemas/OrderQueueSchema"
 						}
 					}
-        }
-      },
+				}
+			},
 			"OrderQueueSchema": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "status": {
-            "type": "string",
-            "example": "AGUARDANDO_PAGAMENTO"
-          },
-          "client": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "name": {
-                "type": "string",
-                "example": "Cacau"
-              }
-            }
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Nbs Bacon Cheese"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho."
-                },
-                "price": {
-                  "type": "number",
-                  "example": "26.99"
-                }
-              }
-            }
-          },
-          "price": {
-            "type": "number",
-            "example": "26.99"
-          }
-        }
-      },
-      "Products": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string",
-            "example": "Coca Cola"
-          },
-          "description": {
-            "type": "string",
-            "example": "Lata 350ml"
-          },
-          "price": {
-            "type": "number",
-            "format": "float",
-            "example": 7
-          },
-          "category": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid"
-              },
-              "name": {
-                "type": "string",
-                "example": "Snack"
-              }
-            }
-          }
-        }
-      },
-      "OrderStatus": {
-        "type": "string",
-        "enum": [
-          "AGUARDANDO_PAGAMENTO",
-          "RECEBIDO",
-          "EM_PREPARO",
-          "PRONTO",
-          "FINALIZADO"
-        ]
-      }
-    }
-  }
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"status": {
+						"type": "string",
+						"example": "AGUARDANDO_PAGAMENTO"
+					},
+					"client": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string",
+								"example": "Cacau"
+							}
+						}
+					},
+					"products": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "string",
+									"example": "Nbs Bacon Cheese"
+								},
+								"description": {
+									"type": "string",
+									"example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho."
+								},
+								"price": {
+									"type": "number",
+									"example": "26.99"
+								}
+							}
+						}
+					},
+					"price": {
+						"type": "number",
+						"example": "26.99"
+					}
+				}
+			},
+			"Products": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Coca Cola"
+					},
+					"description": {
+						"type": "string",
+						"example": "Lata 350ml"
+					},
+					"price": {
+						"type": "number",
+						"format": "float",
+						"example": 7
+					},
+					"category": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string",
+								"example": "Snack"
+							}
+						}
+					}
+				}
+			},
+			"OrderStatus": {
+				"type": "string",
+				"enum": [
+					"AGUARDANDO_PAGAMENTO",
+					"RECEBIDO",
+					"EM_PREPARO",
+					"PRONTO",
+					"FINALIZADO"
+				]
+			}
+		}
+	}
 }
