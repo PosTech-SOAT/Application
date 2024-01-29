@@ -13,30 +13,29 @@ spec:
         app: api
     spec:
       containers:
-      - name: api
-        image: santanarael/api-fiap:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: PG_HOST
-          value: postgres-service
-        - name: PG_PORT
-          value: "5432"
-        - name: PG_USER
-          value: root
-        - name: PG_PASSWORD
-          value: "root"
-        - name: PG_DB
-          value: postech
-        resources:   
-          requests:
-            memory: "64Mi"   # Memória inicial / MI = milicores (1 core = 1000 milicores)
-            cpu: "50m"       # CPU inicial 
-          limits:
-            memory: "128Mi"  # Limite máximo de memória
-            cpu: "500m"      # Limite máximo de CPU  / M = megabytes
+        - name: api
+          image: dedyannac/postech-3soat-app
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: postgres-service
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_USER
+              value: root
+            - name: DB_PASS
+              value: 'root'
+            - name: DB_NAME
+              value: postech
+          resources:
+            requests:
+              memory: '64Mi' # Memória inicial / MI = milicores (1 core = 1000 milicores)
+              cpu: '50m' # CPU inicial
+            limits:
+              memory: '128Mi' # Limite máximo de memória
+              cpu: '500m' # Limite máximo de CPU  / M = megabytes
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -48,5 +47,4 @@ spec:
     - protocol: TCP
       port: 30303
       targetPort: 3000
-  type: NodePort 
-  
+  type: NodePort
