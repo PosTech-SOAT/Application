@@ -28,13 +28,17 @@ spec:
               value: 'root'
             - name: DB_NAME
               value: postech
+            - name: ML_PUBLIC_KEY
+              value: TEST-580c0533-1d6b-4cd6-a936-42b0051102df
+            - name: ML_ACCESS_TOKEN
+              value: TEST-7456580585039188-012819-455f57e3f99cb1ca44c09a1ac2373791-304069289
           resources:
             requests:
-              memory: '64Mi' # Memória inicial / MI = milicores (1 core = 1000 milicores)
-              cpu: '50m' # CPU inicial
+              memory: '128Mi' # Memória inicial / MI = milicores (1 core = 1000 milicores)
+              cpu: '100m' # CPU inicial
             limits:
               memory: '128Mi' # Limite máximo de memória
-              cpu: '500m' # Limite máximo de CPU  / M = megabytes
+              cpu: '200m' # Limite máximo de CPU  / M = megabytes
 ---
 apiVersion: v1
 kind: Service

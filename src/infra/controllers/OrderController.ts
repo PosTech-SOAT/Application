@@ -102,9 +102,10 @@ export default class OrderController {
 		instance: OrderController,
 	) {
 		const query = request.query as unknown as PaymentWebhookRequestParams;
-		const status = query.status
-			? OrderStatus.RECEBIDO
-			: OrderStatus.AGUARDANDO_PAGAMENTO;
+		const status =
+			query.status === 'approved'
+				? OrderStatus.RECEBIDO
+				: OrderStatus.AGUARDANDO_PAGAMENTO;
 		try {
 			await instance.executeStatusUpdate(query.external_reference, status);
 
