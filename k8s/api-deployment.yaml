@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: dedyannac/postech-3soat-app
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              value: postgres-service
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_USER
+              value: root
+            - name: DB_PASS
+              value: 'root'
+            - name: DB_NAME
+              value: postech
+            - name: ML_PUBLIC_KEY
+              value: TEST-580c0533-1d6b-4cd6-a936-42b0051102df
+            - name: ML_ACCESS_TOKEN
+              value: TEST-7456580585039188-012819-455f57e3f99cb1ca44c09a1ac2373791-304069289
+          resources:
+            requests:
+              memory: '128Mi' # Memória inicial / MI = milicores (1 core = 1000 milicores)
+              cpu: '100m' # CPU inicial
+            limits:
+              memory: '128Mi' # Limite máximo de memória
+              cpu: '200m' # Limite máximo de CPU  / M = megabytes
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-service
+spec:
+  selector:
+    app: api
+  ports:
+    - protocol: TCP
+      port: 30303
+      targetPort: 3000
+  type: NodePort
