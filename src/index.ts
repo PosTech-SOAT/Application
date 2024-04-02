@@ -16,6 +16,4 @@ app.use('/api', router);
 app.listen(3000, () => {
 	console.log('🔥 Server listening at http://localhost:3000/api-docs');
 	console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME);
-
-
 });
