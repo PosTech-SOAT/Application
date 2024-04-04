@@ -15,7 +15,7 @@
 		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
 		"mongodb": "5.8.0",
-		"mongoose": "^8.2.4",
+		"mongoose": "^8.3.0",
 		"reflect-metadata": "^0.1.13",
 		"saslprep": "^1.0.3",
 		"tsyringe": "^4.8.0",

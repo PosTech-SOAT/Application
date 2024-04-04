@@ -8,7 +8,6 @@ import {
 	OneToMany,
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
-import { Client } from './Client';
 import { OrdersProducts } from './OrdersProducts';
 
 export enum OrderStatus {
@@ -24,17 +23,17 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   	id: string;
 
-	@Column({
-		type: 'enum',
-		enum: OrderStatus,
-		default: OrderStatus.AGUARDANDO_PAGAMENTO,
-	})
+  @Column({
+  	type: 'enum',
+  	enum: OrderStatus,
+  	default: OrderStatus.AGUARDANDO_PAGAMENTO,
+  })
   	status: OrderStatus;
 
-	@ManyToOne(() => Client, client => client.orders)
-  	client: Client;
+  @Column()
+  	clientId: string;
 
-	@OneToMany(() => OrdersProducts, product => product.order, { eager: true, cascade: true })
+  @OneToMany(() => OrdersProducts, product => product.order, { eager: true, cascade: true })
   	products: OrdersProducts[];
 
   @CreateDateColumn()
@@ -49,3 +48,4 @@ export class Order {
   	}
   }
 }
+

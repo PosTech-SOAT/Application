@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { Client } from '../../../domain/entities/Client';
 import { Category } from '../../../domain/entities/Category';
 import { Order } from '../../../domain/entities/Order';
 import { Product } from '../../../domain/entities/Product';
@@ -20,7 +19,7 @@ export class PostgreSQLFactory {
 			username: process.env.DB_USER,
 			password: process.env.DB_PASS,
 			database: process.env.DB_NAME,
-			entities: [Client, Category, Order, Product, OrdersProducts],
+			entities: [Category, Order, Product, OrdersProducts],
 			migrations: ['./src/infra/typeorm/migrations/*.ts'],
 			migrationsTableName: 'Migrations',
 			synchronize: true,

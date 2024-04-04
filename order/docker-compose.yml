@@ -12,6 +12,8 @@ services:
       - POSTGRES_DB=postech
     volumes:
       - pgdata:/data/postgres
+    networks:
+      - my_network
 
   app:
     build: .
@@ -31,7 +33,13 @@ services:
       - database
     depends_on:
       - database
+    networks:
+      - my_network
 
 volumes:
   pgdata:
     driver: local
+
+networks:
+  my_network:
+    external: true
