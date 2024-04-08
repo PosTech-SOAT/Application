@@ -13,10 +13,12 @@ export default class OrderListByStatusUseCase implements IBaseUseCase<void, Grou
 
 	async execute(): Promise<GroupedOrdersByStatus> {
 		return (await this.orderRepository.listByStatus()).reduce((orders, currentOrder) => {
-			if (!orders[currentOrder.status]) {
-				orders[currentOrder.status] = [mapOrderToOrderDto(currentOrder)];
-			} else {
-				orders[currentOrder.status].push(mapOrderToOrderDto(currentOrder));
+			if (currentOrder.client) {
+				if (!orders[currentOrder.status]) {
+					orders[currentOrder.status] = [mapOrderToOrderDto(currentOrder, currentOrder.client)];
+				} else {
+					orders[currentOrder.status].push(mapOrderToOrderDto(currentOrder, currentOrder.client));
+				}
 			}
 			return orders;
 		}, {} as GroupedOrdersByStatus);

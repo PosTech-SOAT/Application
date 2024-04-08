@@ -20,10 +20,10 @@ export class PostgreSQLFactory {
 			password: process.env.DB_PASS,
 			database: process.env.DB_NAME,
 			entities: [Category, Order, Product, OrdersProducts],
-			migrations: ['./src/infra/typeorm/migrations/*.ts'],
+			migrations: ['./src/data/typeorm/migrations/*.ts'],
 			migrationsTableName: 'Migrations',
-			synchronize: true,
-			logging: false,
+			synchronize: false,
+			logging: true,
 		});
 	}
 

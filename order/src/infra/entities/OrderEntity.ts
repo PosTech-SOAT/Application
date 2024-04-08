@@ -5,6 +5,6 @@ import { IOrdersProducts } from './OrdersProductsEntity';
 export interface IOrder {
 	id: string;
 	status: OrderStatus;
-	client: IClient;
+	client?: IClient;
 	products: Array<IOrdersProducts>;
 }

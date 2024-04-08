@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import { Not, Repository } from 'typeorm';
 import { Order, OrderStatus } from '../entities/Order';
-import { Client } from '../entities/Client';
 import { OrdersProducts } from '../entities/OrdersProducts';
 import { Product } from '../entities/Product';
 import {
@@ -26,24 +27,43 @@ export class OrderRepository implements IOrderRepository {
 	async list(): Promise<OrderDto[]> {
 		const connection = this.getRepo();
 
-		const orders = (
-			await connection.find({
-				relations: ['products', 'client'],
-				where: { status: Not(OrderStatus.FINALIZADO) },
-			})
-		).map(mapOrderToOrderDto);
-		return orders;
+		const orders = await connection.find({
+			relations: ['products'],
+			where: { status: Not(OrderStatus.FINALIZADO) },
+		});
+
+		const orderDtos = await Promise.all(orders.map(async order => {
+			const clientData = JSON.parse(order.clientId);
+			const clientResponse = await axios.get(`http://postech_customer_container:3001/api/clients/${clientData.id}`);
+			return mapOrderToOrderDto(order, clientResponse.data);
+		}));
+
+		return orderDtos;
 	}
 
 	async listByStatus(): Promise<IOrder[]> {
 		const connection = this.getRepo();
 
-		return await connection
+		const orders = await connection
 			.createQueryBuilder('order')
-			.leftJoinAndSelect('order.client', 'client')
 			.leftJoinAndSelect('order.products', 'products')
 			.leftJoinAndSelect('products.product', 'product')
 			.getMany();
+
+		const clientResponses = await Promise.all(
+			orders.map(order => {
+				const clientData = JSON.parse(order.clientId);
+				return axios.get(`http://postech_customer_container:3001/api/clients/${clientData.id}`);
+			})
+		);
+
+		const ordersWithClientData = orders.map((order, index) => {
+			const client = clientResponses[index].data;
+			const products = order.products.map(product => ({...product, order: {...order, client}}));
+			return { ...order, client, products };
+		});
+
+		return ordersWithClientData as unknown as IOrder[];
 	}
 
 	async findById(id: string): Promise<OrderDto | null> {
@@ -51,7 +71,6 @@ export class OrderRepository implements IOrderRepository {
 		try {
 			const order = await connection
 				.createQueryBuilder('order')
-				.leftJoinAndSelect('order.client', 'client')
 				.leftJoinAndSelect('order.products', 'products')
 				.leftJoinAndSelect('products.product', 'product')
 				.where('order.id = :id', { id })
@@ -61,7 +80,11 @@ export class OrderRepository implements IOrderRepository {
 				throw new Error('Order doesnt exists');
 			}
 
-			return mapOrderToOrderDto(order);
+			const clientData = JSON.parse(order.clientId);
+			const clientResponse = await axios.get(`http://postech_customer_container:3001/api/clients/${clientData.id}`);
+
+			const orderDto = mapOrderToOrderDto(order, clientResponse.data);
+			return orderDto;
 		} catch (error) {
 			throw error;
 		}
@@ -91,15 +114,25 @@ export class OrderRepository implements IOrderRepository {
 	}
 
 	async create(params: CreateOrderParams): Promise<IOrder> {
-		const { products, client } = params;
+		const { productIds, clientId } = params;
 		const connection = this.getRepo();
 		const order = new Order();
-		order.client = client as Client;
+
+		const clientResponse = await axios.get(`http://postech_customer_container:3001/api/clients/${clientId}`);
+		if (!clientResponse.data) {
+			throw new Error(`Client with id ${clientId} not found`);
+		}
+		order.clientId = clientResponse.data;
+
+		const products = await connection.manager.findByIds(Product, productIds);
+		if (products.length !== productIds.length) {
+			throw new Error('Some products not found');
+		}
 		order.products = products.map((product) => {
 			const data = new OrdersProducts();
-			data.product = product as Product;
+			data.product = product;
 			return data;
-		}) as Array<OrdersProducts>;
+		});
 
 		return connection.save(order);
 	}

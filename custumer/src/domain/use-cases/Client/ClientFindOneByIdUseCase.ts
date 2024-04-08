@@ -4,14 +4,14 @@ import { IClient } from '../../../infra/entities/ClientEntity';
 import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class ClientFindOneUseCase implements IBaseUseCase<string, IClient | null>{
+export default class ClientFindOneByIdUseCase implements IBaseUseCase<string, IClient | null>{
 	constructor(
     @inject('ClientRepository')
     private clientRepository: IClientRepository
 	) {}
 
-	async execute(cpf: string): Promise<IClient | null> {
-		const client = await this.clientRepository.findByCPF(cpf);
+	async execute(id: string): Promise<IClient | null> {
+		const client = await this.clientRepository.findById(id);
 
 		if (!client) {
 			return null;

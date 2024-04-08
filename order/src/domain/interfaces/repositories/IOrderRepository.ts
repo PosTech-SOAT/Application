@@ -12,10 +12,9 @@ export type CreateOrderExecuteParams = {
 
 export type CreateOrderParams = {
 	status: OrderStatus;
-	client: IClient
-	products: Array<IProduct>
+	clientId: string;
+	productIds: Array<string>;
 }
-
 export interface IOrderRepository {
 	list(): Promise<Array<OrderDto>>
 	findById(id: string): Promise<OrderDto | null>

@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import ClientCreateUseCase from '../../domain/use-cases/Client/ClientCreateUseCase';
 import ClientListUseCase from '../../domain/use-cases/Client/ClientListUseCase';
-import ClientFindOneUseCase from '../../domain/use-cases/Client/ClientFindOneUseCase';
+import ClientFindOneByCpfUseCase from '../../domain/use-cases/Client/ClientFindOneByCpfUseCase';
 import ClientUpdateUseCase from '../../domain/use-cases/Client/ClientUpdateUseCase';
+import ClientFindOneByIdUseCase from '../../domain/use-cases/Client/ClientFindOneByIdUseCase';
 
 export default class ClientController {
 
@@ -37,11 +38,23 @@ export default class ClientController {
 		}
 	}
 
-	async findByCpf(request: Request, response: Response) {
-		const clientListUseCase = container.resolve(ClientFindOneUseCase);
+	async findById(request: Request, response: Response) {
+		const clientByIdUseCase = container.resolve(ClientFindOneByIdUseCase);
 
 		try {
-			const client = await clientListUseCase.execute(request.params.cpf);
+			const client = await clientByIdUseCase.execute(request.params.param);
+
+			return response.status(200).json(client);
+		} catch (error: any) {
+			return response.status(400).json({ message: error.message });
+		}
+	}
+
+	async findByCpf(request: Request, response: Response) {
+		const clientByCpfUsecase = container.resolve(ClientFindOneByCpfUseCase);
+
+		try {
+			const client = await clientByCpfUsecase.execute(request.params.param);
 
 			return response.status(200).json(client);
 		} catch (error: any) {

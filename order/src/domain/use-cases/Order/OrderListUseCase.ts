@@ -6,23 +6,24 @@ import { IClient } from '../../../infra/entities/ClientEntity';
 import { IBaseUseCase } from '../../interfaces/use-cases/IBaseUseCase';
 
 @injectable()
-export default class OrderListUseCase implements IBaseUseCase<void, Array<OrderDto>>{
+export default class OrderListUseCase implements IBaseUseCase<void, Array<OrderDto>> {
 	constructor(
-    @inject('OrderRepository')
-    private orderRepository: IOrderRepository
+        @inject('OrderRepository')
+        private orderRepository: IOrderRepository
 	) {}
 
 	async execute(): Promise<Array<OrderDto>> {
-		return (await this.orderRepository.list()).map((order) => ({
+		const orders = await this.orderRepository.list();
+
+		return orders.map((order) => ({
 			id: order.id,
 			products: order.products.map(({id, name, description, price}) => ({id, name, description, price}) as IProduct),
-			client: {
+			client: order.client ? {
 				id: order.client.id,
 				name: order.client.name,
-			} as IClient,
+			} as IClient : undefined,
 			status: order.status,
 			price: order.price,
-
 		}));
 	}
 }
