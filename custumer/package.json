@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "node_modules/.bin/ts-node-dev --respawn --inspect --transpile-only --ignore-watch=node_modules src/index.ts",
-		"build": "tsc --skipLibCheck"
+		"build": "tsc --skipLibCheck",
+		"test": "jest --passWithNoTests --detectOpenHandles --silent"
 	},
 	"repository": "git@github.com:VitorDiToro/PosTech-3SOAT.git",
 	"author": "Dedyanna Cacau <dedyannacacau@gmail.com>",
@@ -16,12 +17,13 @@
 		"express": "^4.18.2",
 		"mongodb": "5.8.0",
 		"mongoose": "^8.3.0",
-		"reflect-metadata": "^0.1.13",
+		"reflect-metadata": "^0.1.14",
 		"saslprep": "^1.0.3",
 		"tsyringe": "^4.8.0",
 		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.24.5",
 		"@types/express": "^4.17.17",
 		"@types/node": "^20.8.6",
 		"@types/uuid": "^9.0.5",
@@ -30,10 +32,13 @@
 		"eslint": "^8.51.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.1",
+		"jest": "^29.7.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^3.0.3",
+		"supertest": "^7.0.0",
+		"ts-jest": "^29.1.2",
 		"ts-node": "^10.9.1",
 		"ts-node-dev": "^2.0.0",
-		"typescript": "^5.2.2"
+		"typescript": "^5.4.5"
 	}
 }

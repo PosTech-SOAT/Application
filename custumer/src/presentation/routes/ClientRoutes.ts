@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import ClientController from '../../infra/controllers/ClientController';
 
 const clientRoutes = Router();
