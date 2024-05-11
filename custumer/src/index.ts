@@ -1,25 +1,17 @@
-import 'reflect-metadata';
-import 'dotenv/config';
-import express from 'express';
-import { MongoDBConnection } from './data/data-sources/database/MongoDBConnection';
-
-import './infra/controllers/container';
-import router from './presentation';
-
-const app = express();
-app.use(express.json());
-app.use('/api', router);
-
-async function startServer() {
-    await MongoDBConnection.initConnection();
-    app.listen(3001, () => {
-        console.log('🔥 Customer service listening at http://localhost:3001');
-        console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME);
-    });
+export interface ClientRepository {
+    getById(id: string): Promise<Client | null>;
+    getAll(): Promise<Client[]>;
+    create(client: Client): Promise<void>;
+    update(client: Client): Promise<void>;
+    delete(id: string): Promise<void>;
 }
 
-startServer().catch((error) => {
-    console.error('Erro ao iniciar o servidor:', error);
+
+import { container } from 'tsyringe';
+import { ClientRepository } from '../ClientRepository';
+
+container.register('ClientRepository', {
+	useClass: ClientRepository,
 });
 
-export default app; // Adicione esta linha para exportar o objeto app
+
