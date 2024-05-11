@@ -27,5 +27,3 @@ async function startServer() {
 startServer().catch((error) => {
 	console.error('Erro ao iniciar o servidor:', error);
 });
-
-export default app; // Adicione esta linha para exportar o objeto app
