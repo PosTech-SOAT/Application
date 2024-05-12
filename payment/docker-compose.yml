@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres
+    container_name: database_postech
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=postech
+    volumes:
+      - pgdata:/data/postgres
+    networks:
+      - my_network
+
+  app:
+    build: .
+    container_name: postech
+    ports:
+      - 3000:3000
+      - 9229:9229
+    environment:
+      - DB_HOST=database_postech
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASS=root
+      - DB_NAME=postech
+    volumes:
+      - .:/usr/app
+    links:
+      - database
+    depends_on:
+      - database
+    networks:
+      - my_network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  my_network:
+    external: true

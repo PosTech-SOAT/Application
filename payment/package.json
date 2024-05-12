@@ -1,7 +1,7 @@
 {
 	"type": "commonjs",
-	"name": "order",
-	"description": "Order Microservice",
+	"name": "payment",
+	"description": "Payment Microservice",
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
