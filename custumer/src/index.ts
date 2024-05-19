@@ -7,7 +7,7 @@ import './infra/controllers/container';
 import router from './presentation';
 import { configDotenv } from 'dotenv';
 configDotenv();
-const app = express();
+export const app = express();
 app.use(express.json());
 app.use('/api', router);
 
@@ -27,3 +27,5 @@ async function startServer() {
 startServer().catch((error) => {
 	console.error('Erro ao iniciar o servidor:', error);
 });
+
+module.exports = { app };

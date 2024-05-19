@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '..';
-
+import { app } from '..';
+import { faker } from '@faker-js/faker';
 function delay() {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
@@ -9,6 +9,11 @@ function delay() {
 	});
 }
 describe('Testando o endpoint /api/clients', () => {
+	const mockClient = {
+		name: faker.person.firstName(),
+		email: faker.internet.email(),
+		cpf: faker.number.int({ min: 11111111111, max: 99999999999 }).toString(),
+	};
 	beforeAll(async () => {
 		await delay();
 	});
@@ -20,13 +25,8 @@ describe('Testando o endpoint /api/clients', () => {
 	}, 50000);
 
 	test('Deve criar um novo cliente quando enviado um POST valido.', async () => {
-		const newClient = {
-			name: 'Teste da Silva',
-			email: 'teste@mail.com',
-			cpf: '12345678900',
-		};
-
-		const response = await request(app).post('/api/clients').send(newClient);
+		console.log(mockClient);
+		const response = await request(app).post('/api/clients').send(mockClient);
 
 		expect(response.status).toBe(201); // Verifica se o status é 201 (Created)
 		expect(response.body).toHaveProperty(
@@ -36,11 +36,11 @@ describe('Testando o endpoint /api/clients', () => {
 	});
 
 	test('Deve atualizar um cliente quando enviado um PATCH válido', async () => {
-		const cpf = '12345678900';
+		const cpf = mockClient.cpf;
 		const updatedClient = {
-			name: 'Teste de Atualização',
-			email: 'testedeatualizacao@mail.com',
-			cpf: '12345678900',
+			name: faker.person.firstName(),
+			email: faker.internet.email(),
+			cpf: mockClient.cpf,
 		};
 
 		const response = await request(app)
@@ -55,7 +55,7 @@ describe('Testando o endpoint /api/clients', () => {
 	});
 
 	test('Deve retornar um cliente quando enviado um CPF como parâmetro', async () => {
-		const cpf = '12345678900';
+		const cpf = mockClient.cpf;
 
 		const response = await request(app).get(`/api/clients/${cpf}`);
 
