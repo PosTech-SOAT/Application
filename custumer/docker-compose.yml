@@ -6,16 +6,16 @@ services:
     ports:
       - 3001:3001
     environment:
-      - DB_HOST=postech.ufjbi3d.mongodb.net
+      - DB_HOST=fiap-customer.zkrx8sl.mongodb.net
       - DB_PORT=27017
       - DB_USER=root
       - DB_PASS=postech
-      - DB_NAME=postech_custumer
+      - DB_NAME=fiap-customer
     volumes:
       - .:/usr/app
     networks:
-      - my_network
+      - fiap-network
 
 networks:
-  my_network:
-    driver: bridge
+  fiap-network:
+    external: true

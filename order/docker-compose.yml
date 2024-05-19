@@ -13,7 +13,7 @@ services:
     volumes:
       - pgdata:/data/postgres
     networks:
-      - my_network
+      - fiap-network
 
   app:
     build: .
@@ -34,12 +34,12 @@ services:
     depends_on:
       - database
     networks:
-      - my_network
+      - fiap-network
 
 volumes:
   pgdata:
     driver: local
 
 networks:
-  my_network:
+  fiap-network:
     external: true
