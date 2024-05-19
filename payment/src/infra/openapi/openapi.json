@@ -1,0 +1,257 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "PosTech-3SOAT",
+		"version": "1.0.0",
+		"description": "Tech Challenge."
+	},
+	"servers": [
+		{
+			"url": "http://localhost:3002",
+			"description": "Local server"
+		}
+	],
+	"paths": {
+		"/api/payment": {
+			"post": {
+				"tags": ["Payment"],
+				"summary": "Create a new payment",
+				"requestBody": {
+					"description": "Order details",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderQueueSchema"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Client created successfully"
+					},
+					"400": {
+						"description": "Invalid request"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Client": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Cacau"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "dedyannacacau@gmail.com"
+					},
+					"cpf": {
+						"type": "string",
+						"example": "23487654398"
+					}
+				}
+			},
+			"Categories": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Snack"
+					}
+				}
+			},
+			"Category": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Snack"
+					},
+					"description": {
+						"type": "string",
+						"example": "Combos or singles"
+					}
+				}
+			},
+			"Order": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"client": {
+						"type": "string",
+						"example": "Cacau"
+					},
+					"products": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Products"
+						}
+					},
+					"status": {
+						"$ref": "#/components/schemas/OrderStatus"
+					},
+					"price": {
+						"type": "number",
+						"example": 50.99
+					}
+				}
+			},
+			"OrderQueue": {
+				"type": "object",
+				"properties": {
+					"AGUARDANDO_PAGAMENTO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"RECEBIDO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"EM_PREPARO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"PRONTO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					},
+					"FINALIZADO": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderQueueSchema"
+						}
+					}
+				}
+			},
+			"OrderQueueSchema": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"status": {
+						"type": "string",
+						"example": "AGUARDANDO_PAGAMENTO"
+					},
+					"client": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string",
+								"example": "Cacau"
+							}
+						}
+					},
+					"products": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "string",
+									"format": "uuid"
+								},
+								"name": {
+									"type": "string",
+									"example": "Nbs Bacon Cheese"
+								},
+								"description": {
+									"type": "string",
+									"example": "Sanduba com pão artesanal brioche, burger bovino 150g, queijo cheddar, bacon e 2 (duas) opções de molho."
+								},
+								"price": {
+									"type": "number",
+									"example": "26.99"
+								}
+							}
+						}
+					},
+					"price": {
+						"type": "number",
+						"example": "26.99"
+					}
+				}
+			},
+			"Products": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"format": "uuid"
+					},
+					"name": {
+						"type": "string",
+						"example": "Coca Cola"
+					},
+					"description": {
+						"type": "string",
+						"example": "Lata 350ml"
+					},
+					"price": {
+						"type": "number",
+						"format": "float",
+						"example": 7
+					},
+					"category": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string",
+								"format": "uuid"
+							},
+							"name": {
+								"type": "string",
+								"example": "Snack"
+							}
+						}
+					}
+				}
+			},
+			"OrderStatus": {
+				"type": "string",
+				"enum": [
+					"AGUARDANDO_PAGAMENTO",
+					"RECEBIDO",
+					"EM_PREPARO",
+					"PRONTO",
+					"FINALIZADO"
+				]
+			}
+		}
+	}
+}

@@ -1,45 +1,18 @@
 version: '3.9'
-
 services:
-  database:
-    image: postgres
-    container_name: database_postech
-    ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=postech
-    volumes:
-      - pgdata:/data/postgres
-    networks:
-      - my_network
-
   app:
     build: .
-    container_name: postech
+    container_name: postech_payment_container
     ports:
-      - 3000:3000
-      - 9229:9229
+      - 3002:3002
     environment:
-      - DB_HOST=database_postech
-      - DB_PORT=5432
-      - DB_USER=root
-      - DB_PASS=root
-      - DB_NAME=postech
+      - ML_PUBLIC_KEY=TEST-580c0533-1d6b-4cd6-a936-42b0051102df
+      - ML_ACCESS_TOKEN=TEST-7456580585039188-012819-455f57e3f99cb1ca44c09a1ac2373791-304069289
     volumes:
       - .:/usr/app
-    links:
-      - database
-    depends_on:
-      - database
     networks:
-      - my_network
-
-volumes:
-  pgdata:
-    driver: local
+      - fiap-network
 
 networks:
-  my_network:
+  fiap-network:
     external: true

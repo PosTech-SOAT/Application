@@ -1,35 +1,27 @@
 import { Request, Response } from 'express';
-import { container, inject } from 'tsyringe';
-import { OrderStatus } from '../../domain/entities/Order';
-import { PaymentRepository } from '../../domain/repositories/PaymentRepository';
-import { PaymentWebhookRequestParams } from '../dto/PaymentWebhookRequestDto';
 import { IPaymentRepository } from '../../domain/interfaces/repositories/IPaymentRepository';
-
+import { OrderDto } from '../dto/OrderDto';
 export default class PaymentController {
 	private paymentRepository: IPaymentRepository;
-	constructor() {
-		this.paymentRepository = new PaymentRepository();
+	constructor(paymentRepository: IPaymentRepository) {
+		this.paymentRepository = paymentRepository;
 	}
 
 	async create(
 		request: Request,
 		response: Response,
-		instance: OrderController,
+		instance: PaymentController,
 	) {
-		const createOrderUseCase = container.resolve(OrderCreateUseCase);
 		try {
-			const order = await createOrderUseCase.execute(request.body);
-			const findOneOrderUseCase = container.resolve(OrderFindOneUseCase);
 			const payment_url = await instance.paymentRepository.CreatePayment(
-				await findOneOrderUseCase.execute(order.id),
+				request.body as OrderDto,
 			);
 			return response.status(201).json({
-				message: 'Order created successfully',
+				message: 'Payment linked created successfully',
 				payment_url: payment_url,
 			});
 		} catch (error: any) {
 			return response.status(400).json({ message: error.message });
 		}
 	}
-	
 }

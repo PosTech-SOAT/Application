@@ -1,12 +1,12 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
-import { PaymentDto } from '../../infra/dto/PaymentDto';
 import { IPaymentRepository } from '../interfaces/repositories/IPaymentRepository';
+import { OrderDto } from '../../infra/dto/OrderDto';
 
 const GENERIC_ERROR_MESSAGE =
 	'Ocorreu um erro ao tentar gerar o link de pagamento!';
 
 export class PaymentRepository implements IPaymentRepository {
-	async CreatePayment(order: PaymentDto | null) {
+	async CreatePayment(order: OrderDto | null) {
 		if (order) {
 			const client = new MercadoPagoConfig({
 				accessToken: process.env.ML_ACCESS_TOKEN || '',
@@ -36,6 +36,9 @@ export class PaymentRepository implements IPaymentRepository {
 							failure: 'http://localhost:3000/api/orders/callback',
 							pending: 'http://localhost:3000/api/orders/callback',
 						},
+						payment_methods: {
+							installments: 1,
+						},
 						auto_return: 'all',
 						external_reference: order.products[0].id,
 					},
@@ -45,6 +48,7 @@ export class PaymentRepository implements IPaymentRepository {
 				throw new Error(GENERIC_ERROR_MESSAGE);
 			}
 		}
+
 		throw new Error(GENERIC_ERROR_MESSAGE);
 	}
 }
