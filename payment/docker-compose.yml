@@ -15,4 +15,4 @@ services:
 
 networks:
   fiap-network:
-    external: true
+    driver: bridge
