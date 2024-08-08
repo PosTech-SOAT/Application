@@ -158,3 +158,26 @@ Após configurar esses segredos, a pipeline do GitHub Actions estará pronta par
 
 
 
+
+
+### Justificativa para a escolha do padrão Coreografado para o padrão SAGA
+
+Optamos por utilizar o padrão Saga coreografado para gerenciar a consistência dos dados em nossos microsserviços por diversas razões:
+
+1. **Desacoplamento dos Serviços:**
+   No padrão coreografado, cada microsserviço é responsável por ouvir eventos e agir de acordo. Isso promove um alto grau de desacoplamento entre os serviços, permitindo que cada um evolua independentemente.
+
+2. **Escalabilidade:**
+   Com a coreografia, a lógica de saga não está centralizada em um único orquestrador. Isso distribui a carga de trabalho entre os microsserviços, o que pode melhorar a escalabilidade do sistema.
+
+3. **Resiliência:**
+   A abordagem coreografada facilita a implementação de mecanismos de compensação e recuperação, pois cada serviço pode reagir a falhas e eventos de maneira autônoma, aumentando a resiliência geral do sistema.
+
+4. **Simplicidade Operacional:**
+   A ausência de um orquestrador central simplifica a operação e a manutenção do sistema, reduzindo pontos únicos de falha e complexidade operacional.
+
+5. **Flexibilidade e Extensibilidade:**
+   A arquitetura coreografada permite adicionar novos serviços ou modificar os existentes sem a necessidade de alterar um orquestrador central, facilitando a extensibilidade e a adaptabilidade do sistema.
+
+
+A escolha pelo padrão coreografado foi feita após uma análise cuidadosa das necessidades do nosso sistema e das vantagens oferecidas por essa abordagem em termos de escalabilidade, resiliência e flexibilidade.
