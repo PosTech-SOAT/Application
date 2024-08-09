@@ -30,6 +30,7 @@ Vamos utilizar o microsserviço "customer" para o passo a passo, mas pode ser ap
 - Customer:  https://github.com/PosTech-SOAT/Customer
 - Order:  https://github.com/PosTech-SOAT/Order
 - Payment:  https://github.com/PosTech-SOAT/Payment
+- Lambda Layer: https://github.com/PosTech-SOAT/Lambda
 
 
 
